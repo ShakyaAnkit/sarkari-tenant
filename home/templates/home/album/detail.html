@@ -1,0 +1,59 @@
+{% extends "home/base/index.html" %} 
+
+{% load static %}
+{% load nepaliDate %}
+{% load localization %}
+
+{% block title %}{{ config.website_title__localized|default:'वेबसाइट शीर्षक' }}{% endblock %}
+
+{% block content %}
+
+	<section class="breadcrump-section">
+		<div class="breadcrump-bgimg" style="background-image: url({% static 'home/assets/images/mt-everest.jpg' %});">
+			<div class="breadcrumb-overlay-text text-center">
+				
+				<div class="breadcrumb-title mb-15">
+					<h1>{{ object.name }}</h1>
+				</div>
+
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="{% url_localized 'home:home' %}">{% trans %}Home{% endtrans %}</a></li>
+                        <li class="breadcrumb-item" aria-current="page"><a href="{% url_localized 'home:album-list' %}">{% trans %}Photo Gallery{% endtrans %}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ object.name__localized }}</li>                        
+					</ol>
+				</nav>
+			</div>
+		</div>
+    </section>
+{% if object %}
+    <section class="section gallery-section">
+        <div class="container">
+           <div>
+                <div class="mb-30">
+                    <!-- <div class="features-category">
+                        <span class="features-category-title box-shadow-effect">अन्तरक्रिया कार्यक्रम २०७६।९।२३, घोराही, दाङ</span>
+                    </div> -->
+                </div>
+                <div class="row">
+                {% for photo in photos %}
+                    <div class="col-lg-4 col-md-6 mb-30">
+                        <div class="content">
+                            <a href="{{ photo.get_original_photo }}" data-fancybox="images">
+                              {% comment %} <div class="content-overlay"></div> {% endcomment %}
+                              <img src="{{ photo.get_photo }}" alt="" style="object-fit: cover;">
+                              <div class="icons-display">
+                                <h3><span><i class="fas fa-image"></i></span></h3>
+                              </div>
+                            </a>
+                          </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+
+{% endblock %}

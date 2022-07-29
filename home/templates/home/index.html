@@ -1,0 +1,774 @@
+{% extends "home/base/index.html" %} 
+
+{% load static %}
+{% load nepaliDate %}
+{% load localization %}
+
+{% block title %}{{ config.website_title__localized|default:'वेबसाइट शीर्षक' }}{% endblock %}
+
+{% block head %}
+	<style>
+		.profile-img img {
+			width: 100px;
+			height: 100px;
+			border-radius: 50%;
+			object-fit: cover;
+		}
+		.event-flex {
+            cursor:pointer !important;
+        }
+        .events-table {
+            z-index: 9!important
+        }
+
+		.iframe-section iframe{
+			border: none;
+		}
+
+		/* news marquee */
+		.slider-banner-section, .breadcrump-bgimg {
+			margin-top: 0px;
+		}
+
+		.news-marquee-box{
+			overflow: hidden;
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+
+		@media screen and ( max-width: 996px ){
+			.news-marquee-box{
+				margin-top: 60px;
+			}
+		}
+
+		.news-marquee{
+			margin-right: 50px;
+		}
+
+		.news-marquee img{
+			width: auto; height: 30px; margin-right: 5px;
+		}
+
+
+		/* PROFILE */
+
+		.profile-absolute {
+			max-height: 400px;
+			overflow-y: auto;
+			max-width: 300px;
+			min-width: 200px;
+		}
+
+		
+	</style>
+{% endblock %}
+
+{% block content %}
+	{% if marquee_notices %}
+	<div class="text-dark news-marquee-box">
+		{% for notice_obj in marquee_notices %}
+		<div class="d-inline-block news-marquee">
+			<a href="{% url_localized 'home:notice-detail' notice_obj.pk %}">
+				{% comment %} <img src="{{ notice_obj.get_photo }}" /> {% endcomment %}
+				<span>{{ notice_obj.title__localized }}</span>
+			</a>
+		</div>
+		{% endfor %}
+	</div>
+	{% endif %}
+	
+	{% if sliders %}
+	<section class="slider-banner-section">
+		<div class="">
+			<div class="position-relative">
+					<div class="banner-initial-slider slider">
+					{% for slider in sliders  %}
+						<div class="">
+							<div class="banner-overlay" style="background: url({{ slider.get_photo }}); background-size: cover; background-repeat: no-repeat; background-position: center; position: relative;">
+								<div class="banner-overlay-text prixa-headline-background animation-css" data-animation-css="animated fadeIn slower">
+									<div class="">
+										
+										<div class="prixa-headline-heading animation-css" data-animation-css="animated slideInLeft slower">
+											<h1 class="slider-first-heading mb-4">{{ slider.title__localized|default_if_none:'' }}</h1>
+										</div>
+			
+										{% comment %} <div class="prixa-headline-date animation-css" data-animation-css="animated slideInLeft delay-1s slower">
+											<ul class="post-meta mt-15">
+												<li class="list-date">{{ slider.created_at|date_to_nep }}</li>
+											</ul> 
+										</div> {% endcomment %}
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+					</div>
+					<div class="profile-absolute">
+						<div class="profile-bgcolor">
+						   		{% for hr in slider_hr %}
+								<div class="mb-3">
+									<div class="flex-Center">
+										<div class="profile-img">
+											<!--<a href="{% url_localized 'home:hr-detail' hr.pk %}"><img style="width: 150px; height: 150px;" src="{{ hr.get_photo }}"></a>-->
+											<a href="{% url_localized 'home:hr-detail' hr.pk %}"><img src="{{ hr.get_photo }}" style="border-radius: 0px; object-position: top; width: 65px; height: 80px;"></a>
+										</div>
+										<div class="profile-desc pl-15">
+											<div>
+												<h4 style="font-size: 20px"><a href="{% url_localized 'home:hr-detail' hr.pk %}">{{ hr.name__localized }}</a></h4>
+												<h6 style="font-size: 16px">{{ hr.position__localized }}</h6>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endfor %}
+						</div>
+					</div>
+			</div>
+		</div>
+		
+	</section>
+	{% endif %}
+
+	{% if config.header_iframe %}
+	<section class="section tabs-listing">
+		<div class="container iframe-section">
+			{{ config.header_iframe|safe }}
+		</div>
+	</div>
+	{% endif %}
+	
+	<section class="section tabs-listing">
+		<div class="container">
+			<div class="row">
+				{% if config.about_us %}
+				<div class="col-lg">
+					<div class="">
+						<div class="mb-30">
+							<div class="features-category">
+								<span class="features-category-title box-shadow-effect">{% trans %}About Us{% endtrans %}</span>
+							</div>
+						</div>
+						<div style="color: black; font-size: 20px; line-height: 35px;" class="text-justify">
+							{{ config.about_us__localized|safe }}
+						</div>
+					</div>
+				</div>
+				{% endif %}
+
+				{% if notices.count > 0 or press_releases.count > 0 %}
+				<div class="col-lg">
+					<div class="mobile-mt-30">
+						<div class="mb-30">
+							<div class="features-category">
+								<span class="features-category-title box-shadow-effect">{% trans %}Notices and Press Releases{% endtrans %}</span>
+							</div>
+						</div>
+						
+						<div class="features-listing-pills">
+							<nav>
+								<div class="nav nav-tabs" id="nav-tab" role="tablist">
+									<a class="nav-item nav-link active" id="forth-category-tab" data-toggle="tab" href="#notices" role="tab" aria-controls="forth-category" aria-selected="false">{% trans %}Notices{% endtrans %}</a>
+									<a class="nav-item nav-link" id="third-category-tab" data-toggle="tab" href="#pressReleases" role="tab" aria-controls="third-category" aria-selected="true">{% trans %}Press Releases{% endtrans %}</a>
+									{% for list_category in list_categories %}
+									<a class="nav-item nav-link" data-toggle="tab" href="#listCategory{{ list_category.pk }}" role="tab" aria-controls="third-category" aria-selected="true">{{ list_category.name__localized }}</a>
+									{% endfor %}
+								</div>
+							</nav>
+						</div>
+	
+						<div class="tab-content" id="nav-tabContent">
+							<div class="tab-pane fade show active" id="notices" role="tabpanel" aria-labelledby="third-category-tab">
+								<div class="overflow-auto scrollbar-css mb-15">
+									<table class="table table-height">
+										
+										<tbody class="table-hover-css">
+											{% for notice in notices %}
+											<tr>
+												<td><img src="{{ notice.file_image }}" class="table-bg-img"></td>
+												<td><a href="{% url_localized 'home:notice-detail' notice.pk %}">{{ notice.title__localized }}</a></td>
+												{% comment %} <td><div href="#" class="badge-date">{{ notice.notice_date__localized }}</div></td> {% endcomment %}
+												<td>
+													<div class="view-more-btn">
+														<a href="{% url_localized 'home:notice-detail' notice.pk %}" class="btn btn-warning">{% trans %}View more{% endtrans %}</a>
+													</div>
+												</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+								<div class="view-more-btn text-right pr-10">
+									<a href="{% url_localized 'home:notices-list' %}" class="btn btn-dark">{% trans %}View more{% endtrans %}</a>
+								</div>
+							</div>
+
+							<div class="tab-pane fade show" id="pressReleases" role="tabpanel" aria-labelledby="third-category-tab">
+								<div class="overflow-auto scrollbar-css mb-15">
+									<table class="table table-height">
+										
+										<tbody class="table-hover-css">
+											{% for press_release in press_releases %}
+											<tr>
+												<td><img src="{{ press_release.file_image }}" class="table-bg-img"></td>
+												<td><a href="{% url_localized 'home:press-releases-detail' press_release.pk %}">{{ press_release.title__localized }}</a></td>
+												<td><div class="badge-date">{{ press_release.updated_at__localized }}</div></td>
+												<td>
+													<div class="view-more-btn">
+														<a href="{% url_localized 'home:press-releases-detail' press_release.pk %}" class="btn btn-warning">{% trans %}View more{% endtrans %}</a>
+													</div>
+												</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+								<div class="view-more-btn text-right pr-10">
+									<a href="{% url_localized 'home:press-releases-list' %}" class="btn btn-dark">{% trans %}View more{% endtrans %}</a>
+								</div>
+							</div>
+
+							{% for list_category in list_categories %}
+							<div class="tab-pane fade show" id="listCategory{{ list_category.pk }}" role="tabpanel" aria-labelledby="third-category-tab">
+								
+								<div class="overflow-auto scrollbar-css mb-15">
+									<table class="table table-height">
+										
+										<tbody class="table-hover-css">
+											{% for list in list_category.list.all|slice:':4' %}
+											<tr>
+												<td><img src="{{ list.file_image }}" class="table-bg-img"></td>
+												<td><a href="{% url_localized 'home:list-detail' list.pk %}">{{ list.title__localized }}</a></td>
+												<td><div class="badge-date">{{ list.updated_at__localized }}</div></td>
+												<td>
+													<div class="view-more-btn">
+														<a href="{% url_localized 'home:list-detail' list.pk %}" class="btn btn-warning">{% trans %}View more{% endtrans %}</a>
+													</div>
+												</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+								<div class="view-more-btn text-right pr-10">
+									<a href="{% url_localized 'home:list-category' list_category.name %}" class="btn btn-dark">{% trans %}View more{% endtrans %}</a>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+		</div>
+	</section>
+
+	{% if hr.count > 0 %}
+	<section class="section listing-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-9 col-md-8">
+					<div class="mb-30">
+						<div class="features-category">
+							<span class="features-category-title box-shadow-effect">{% trans %}{{ config.hr_string__localized|default:'Members / Staffs' }}{% endtrans %}</span>
+						</div>
+					</div>
+					
+					<div class="mb-30">
+						<div class="caption-slider slider mt-30">
+							{% for hr in hr %}
+							<div class="img-full-height img-min-height">
+								<div class="post post-bground-images caption detail-caption">
+									<div class="caption-overlay"></div>
+									<a href="#" class="">
+										<div class="post-bground-img-hover" style="background: url({{ hr.get_photo }}); background-size: cover; background-repeat: no-repeat; background-position: center; height: 100%; position: relative;">
+										</div>
+									</a>
+									<div class="caption-details">
+										<div class="caption-title">
+											<div class="white-title-link-color">
+
+												<ul class="post-meta mt-2">
+													<li><a href="{% url_localized 'home:hr-detail' hr.pk %}" class="">{{ hr.name__localized }}</a></li>
+													<li>{{ hr.position__localized }}</li>
+													{% comment %} {% if hr.level %}<li>{{ hr.level }}</li>{% endif %} {% endcomment %}
+													<!-- <li>फोन नं. : ०७१-५४००२९, ५५०००३ Ext. ३०१</li> -->
+													{% comment %} {% if hr.phone_no %}<li>मोबाइल नं. : {{ hr.phone_no }}</li>{% endif %} {% endcomment %}
+													{% if hr.email %}<li style="text-transform: none;">{% trans %}Email{% endtrans %} : {{ hr.email }}</li>{% endif %}
+												</ul>
+											</div>
+										</div>
+										<div class="view-all">
+											<a href="{% url_localized 'home:hr-detail' hr.pk %}" >{% trans %}See more{% endtrans %}</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+						
+						{% comment %} <div class="view-more-btn text-right">
+							<a href="{% url_localized 'home:hr-list' %}" class="btn btn-dark">{% trans %}View more{% endtrans %}</a>
+						</div> {% endcomment %}
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-4">
+					<div class="mb-30">
+						<div class="features-category">
+							<span class="features-category-title box-shadow-effect">{% trans %}Information Officer{% endtrans %}</span>
+						</div>
+					</div>
+					<div class="mb-30 d-flex justify-content-center">
+						{% if suchana_hr %}
+						<div class="img-full-height img-min-height" style="width: 200px;">
+							<div class="post post-bground-images caption detail-caption">
+								<div class="caption-overlay"></div>
+								<a href="#" class="">
+									<div class="post-bground-img-hover" style="background: url({{ suchana_hr.get_photo }}); background-size: cover; background-repeat: no-repeat; background-position: center; height: 100%; position: relative;">
+									</div>
+								</a>
+								<div class="caption-details">
+									<div class="caption-title">
+										<div class="white-title-link-color">
+
+											<ul class="post-meta mt-2">
+												<li><a href="{% url_localized 'home:hr-detail' suchana_hr.pk %}" class="">{{ suchana_hr.name__localized }}</a></li>
+												<li>{{ suchana_hr.position__localized }}</li>
+												{% comment %} {% if suchana_hr.level %}<li>{{ suchana_hr.level }}</li>{% endif %} {% endcomment %}
+												<!-- <li>फोन नं. : ०७१-५४००२९, ५५०००३ Ext. ३०१</li> -->
+												{% comment %} {% if suchana_hr.phone_no %}<li>{% trans %}Mobile no.{% endtrans %} : {{ suchana_hr.phone_no }}</li>{% endif %} {% endcomment %}
+												{% if suchana_hr.email %}<li style="text-transform: none;">{% trans %}Email{% endtrans %} : {{ suchana_hr.email }}</li>{% endif %}
+											</ul>
+										</div>
+									</div>
+									<div class="view-all">
+										<a href="{% url_localized 'home:hr-detail' suchana_hr.pk %}" >{% trans %}See more{% endtrans %}</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	{% endif %}
+	
+
+	<section class="section tabs-listing">
+		<div class="container">
+			<div class="row">
+				
+				{% if bid_categories.count > 0 %}
+				<div class="col-lg">
+					<div class="mobile-mt-30">
+						<div class="mb-30">
+							<div class="features-category">
+								<span class="features-category-title box-shadow-effect">{% trans %}Request for Bids{% endtrans %}</span>
+							</div>
+						</div>
+						
+						<div class="features-listing-pills">
+							<nav>
+								<div class="nav nav-tabs" id="nav-tab" role="tablist">
+									{% for bid_category in bid_categories %}
+									<a class="nav-item nav-link {% if forloop.counter == 1 %}active{% endif %}" data-toggle="tab" href="#bidCategory{{ bid_category.pk }}" role="tab" aria-controls="third-category" aria-selected="true">{{ bid_category.name__localized }}</a>
+									{% endfor %}
+								</div>
+							</nav>
+						</div>
+	
+						<div class="tab-content" id="nav-tabContent">
+							{% for bid_category in bid_categories %}
+							<div class="tab-pane fade show {% if forloop.counter == 1 %}active{% endif %}" id="bidCategory{{ bid_category.pk }}" role="tabpanel" aria-labelledby="third-category-tab">
+								
+								<div class="overflow-auto scrollbar-css mb-15">
+									<table class="table table-height">
+										
+										<tbody class="table-hover-css">
+											{% for bid in bid_category.bids.all|slice:':4' %}
+											<tr>
+												<td><img src="{{ bid.file_image }}" class="table-bg-img"></td>
+												<td><a href="{% url_localized 'home:bids-detail' bid.pk %}">{{ bid.title__localized }}</a></td>
+												<td><div class="badge-date">{{ bid.updated_at__localized }}</div></td>
+												<td>
+													<div class="view-more-btn">
+														<a href="{% url_localized 'home:bids-detail' bid.pk %}" class="btn btn-warning">{% trans %}View more{% endtrans %}</a>
+													</div>
+												</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+								<div class="view-more-btn text-right pr-10">
+									<a href="{% url_localized 'home:bids-list' %}" class="btn btn-dark">{% trans %}View more{% endtrans %}</a>
+								</div>
+							</div>
+							{% endfor %}
+							
+						</div>
+					</div>
+				</div>
+				{%  endif %}
+
+				{% if download_categories.count > 0 %}
+				<div class="col-lg">
+					<div class="mobile-mt-30">
+						<div class="mb-30">
+							<div class="features-category">
+								<span class="features-category-title box-shadow-effect">{% trans %}Downloads{% endtrans %}</span>
+							</div>
+						</div>
+						
+						<div class="features-listing-pills">
+							<nav>
+								<div class="nav nav-tabs" id="nav-tab" role="tablist">
+									{% for download_category in download_categories %}
+									<a class="nav-item nav-link {% if forloop.counter == 1 %}active{% endif %}" data-toggle="tab" href="#downloadCategory{{ download_category.pk }}" role="tab" aria-controls="third-category" aria-selected="true">{{ download_category.name__localized }}</a>
+									{% endfor %}
+								</div>
+							</nav>
+						</div>
+	
+						<div class="tab-content" id="nav-tabContent">
+							{% for download_category in download_categories %}
+							<div class="tab-pane fade show {% if forloop.counter == 1 %}active{% endif %}" id="downloadCategory{{ download_category.pk }}" role="tabpanel" aria-labelledby="third-category-tab">
+								
+								<div class="overflow-auto scrollbar-css mb-15">
+									<table class="table table-height">
+										
+										<tbody class="table-hover-css">
+											{% for download in download_category.get_downloads|slice:':4' %}
+											<tr>
+												<td><img src="{{ download.file_image }}" class="table-bg-img"></td>
+												<td><a href="{% url_localized 'home:downloads-detail' download.pk %}">{{ download.title__localized }}</a></td>
+												<td><div class="badge-date">{{ download.updated_at__localized }}</div></td>
+												<td>
+													<div class="view-more-btn">
+														<a href="{% url_localized 'home:downloads-detail' download.pk %}" class="btn btn-warning">{% trans %}View more{% endtrans %}</a>
+													</div>
+												</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+								<div class="view-more-btn text-right pr-10">
+									<a href="{% url_localized 'home:downloads-list' %}" class="btn btn-dark">{% trans %}View more{% endtrans %}</a>
+								</div>
+							</div>
+							{% endfor %}
+							
+						</div>
+					</div>
+				</div>
+				{%  endif %}
+			</div>
+		</div>
+		</div>
+	</section>
+
+
+	{% if albums %}
+	<section class="section gallery-section">
+		<div class="container">
+		   <div>
+				<div class="mb-30">
+					<div class="features-category">
+						<span class="features-category-title box-shadow-effect">{% trans %}Photo Gallery{% endtrans %}</span>
+					</div>
+				</div>		   
+				<div class="row">
+				{% for album in albums %}
+					<div class="col-lg-4 col-md-6 mb-30">
+						<div class="content">
+							<a href="{% url_localized 'home:album-detail' album.id %}">
+							  <div class="content-overlay"></div>
+							  <img src="{{ album.get_title_image }}" alt="">
+							  <div class="content-details fadeIn-bottom">
+								<h3 class="content-title">{{ album.name__localized }}</h3>
+							  </div>
+							</a>
+						  </div>
+					</div>
+				{% endfor %}
+				</div>
+			</div>
+		   <div class="view-more-btn text-right">
+				<a href="{% url_localized 'home:album-list' %}" class="btn btn-dark">{% trans %}View more{% endtrans %}</a>
+			</div>
+		</div>
+	</section>
+	{% endif %}
+
+	<section class="section calndar-section">
+		<div class="container">
+            <div class="calendar-layout mb-30">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="mb-30">
+                            <div class="features-category">
+                                <span class="features-category-title box-shadow-effect">{% trans %}Events{% endtrans %}</span>
+                            </div>
+                        </div>
+                        <div class="np-container text-center mb-30 sticky-sidebar ">
+                           <div class="calendar"></div>
+                        </div>
+                    </div>
+                    {% if events %}
+                    <div class="col-lg-4">
+                        <div class="calendar-list-block">
+
+                            <div class="mb-30">
+                                <div class="features-category">
+                                    <span class="features-category-title box-shadow-effect">{% trans %}More Events{% endtrans %}</span>
+                                </div>
+                            </div>
+                            <ul class="description-heading-font">
+                            {% for event in events %}    
+                                <li class="flex-Center mb-30">
+                                    <div class="desc-date mr-15">
+                                        <div href="{% url_localized 'home:event-detail' event.id %}" class="table-calendar-date">
+                                            <div class="table-calendar-day">
+												{% if locale == 'ne' %}
+												{{ event.start_date|nep_date }}
+												{% else %}
+												{{ event.start_date|date:'d' }}
+												{% endif %}
+											</div>
+                                            <div class="table-calendar-month">
+												{% if locale == 'ne' %}
+												{{ event.start_date|nep_month }}
+												{% else %}
+												{{ event.start_date|date:'M' }}
+												{% endif %}
+											</div>
+                                        </div>
+                                    </div>
+                                    <div class="calendar-events-program ">
+                                        <div class="calendar-events-title mb-10"><a href="{% url_localized 'home:event-detail' event.id %}">{{ event.title__localized|truncatechars:50 }}</a></div>
+                                        <div class="calendar-events-location "><i class="fas fa-map-marker-alt "></i>&nbsp;{{ event.location__localized }} </div>
+                                    </div>
+                                </li>
+                            {% endfor %}                                    
+                            </ul>
+                            <div class="view-more-btn text-right pr-10">
+								<a href="{% url_localized 'home:events-list' %}" class="btn btn-dark">{% trans %}View more{% endtrans %}</a>
+							</div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+	</section>
+
+	{% if news %}
+	<section class="section news-section">
+		<div class="container">
+			<div class="mb-30">
+				<div class="features-category">
+					<span class="features-category-title box-shadow-effect">{% trans %}News{% endtrans %}</span>
+				</div>
+			</div>
+			<div class="row">
+			{% for news in news %}
+				<div class="col-lg-4 col-md-6">
+					<div><div class="border-white-box mb-30">
+						<div class="post">
+							<a class="" href="{% url_localized 'home:news-detail' news.pk %}" title="{{ news.title__localized }}" ><img class="img-fluid" src="{{ news.get_photo }}" alt=""></a>
+							<div class="post-body post-body-bgcolor post-body-overlay-margin">
+								<div class="mb-10">
+									<h5><a href="{% url_localized 'home:news-detail' news.pk %}" >{{ news.title__localized }}</a></h5>
+								</div>
+								<ul class="post-meta mb-10 pl-0">
+									<!-- category field need to add -->
+									<li class="list-category"><a href="{% url_localized 'home:news-detail' news.pk %}" >{{ news.author|default_if_none:'' }}</a></li>
+									<li class="list-date">{{ news.created_at__localized }}</li>
+								</ul>
+								<div class="mb-10">
+									<p>{{ news.description|striptags|safe|truncatechars:160  | default_if_none:'' }}</p>
+								</div>
+								<span class="read-more "><a href="{% url_localized 'home:news-detail' news.pk %}" >{% trans %}Read More{% endtrans %}</a></span>
+							</div>
+						</div>
+					</div></div>
+				</div>
+			{% endfor %}
+			</div>
+			<div class="view-more-btn text-right">
+				<a href="{% url_localized 'home:news-list' %}" class="btn btn-dark">{% trans %}View more{% endtrans %}</a>
+			</div>
+		</div>
+	</section>
+	{% endif %}
+
+	<section class="section tabs-listing">
+		<div class="container">
+			<div class="row">
+				{% if publication_categories.count > 0 %}
+				<div class="col-lg">
+					<div class="mobile-mt-30">
+						<div class="mb-30">
+							<div class="features-category">
+								<span class="features-category-title box-shadow-effect">{% trans %}Publications{% endtrans %}</span>
+							</div>
+						</div>
+						
+						<div class="features-listing-pills">
+							<nav>
+								<div class="nav nav-tabs" id="nav-tab" role="tablist">
+									{% for publication_category in publication_categories %}
+									<a class="nav-item nav-link {% if forloop.counter == 1 %}active{% endif %}" data-toggle="tab" href="#publicationCategory{{ publication_category.pk }}" role="tab" aria-controls="third-category" aria-selected="true">{{ publication_category.name__localized }}</a>
+									{% endfor %}
+								</div>
+							</nav>
+						</div>
+	
+						<div class="tab-content" id="nav-tabContent">
+							{% for publication_category in publication_categories %}
+							<div class="tab-pane fade show {% if forloop.counter == 1 %}active{% endif %}" id="publicationCategory{{ publication_category.pk }}" role="tabpanel" aria-labelledby="third-category-tab">
+								
+								<div class="overflow-auto scrollbar-css mb-15">
+									<table class="table table-height">
+										
+										<tbody class="table-hover-css">
+											{% for publication in publication_category.publications.all|slice:':4' %}
+											<tr>
+												<td><img src="{{ publication.file_image }}" class="table-bg-img"></td>
+												<td><a href="{% url_localized 'home:publications-detail' publication.pk %}">{{ publication.title__localized }}</a></td>
+												<td><div href="{% url_localized 'home:publications-detail' publication.pk %}" class="badge-date">{{ publication.updated_at__localized }}</div></td>
+												<td>
+													<div class="view-more-btn">
+														<a href="{% url_localized 'home:publications-detail' publication.pk %}" class="btn btn-warning">{% trans %}View more{% endtrans %}</a>
+													</div>
+												</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+								<div class="view-more-btn text-right pr-10">
+									<a href="{% url_localized 'home:publications-list' %}?category={{ publication_category.name }}" class="btn btn-dark">{% trans %}View more{% endtrans %}</a>
+								</div>
+							</div>
+							{% endfor %}
+							
+						</div>
+					</div>
+				</div>
+				{% endif %}
+
+				{% if policy_categories.count > 0 %}
+				<div class="col-lg">
+					<div class="mobile-mt-30">
+						<div class="mb-30">
+							<div class="features-category">
+								<span class="features-category-title box-shadow-effect">{% trans %}Policies{% endtrans %}</span>
+							</div>
+						</div>
+						
+						<div class="features-listing-pills">
+							<nav>
+								<div class="nav nav-tabs" id="nav-tab" role="tablist">
+									{% for policy_category in policy_categories %}
+									<a class="nav-item nav-link {% if forloop.counter == 1 %}active{% endif %}" data-toggle="tab" href="#policyCategory{{ policy_category.pk }}" role="tab" aria-controls="third-category" aria-selected="true">{{ policy_category.name__localized }}</a>
+									{% endfor %}
+								</div>
+							</nav>
+						</div>
+	
+						<div class="tab-content" id="nav-tabContent">
+							{% for policy_category in policy_categories %}
+							<div class="tab-pane fade show {% if forloop.counter == 1 %}active{% endif %}" id="policyCategory{{ policy_category.pk }}" role="tabpanel" aria-labelledby="third-category-tab">
+								
+								<div class="overflow-auto scrollbar-css mb-15">
+									<table class="table table-height">
+										
+										<tbody class="table-hover-css">
+											{% for policy in policy_category.policies.all|slice:':4' %}
+											<tr>
+												<td><img src="{{ policy.file_image }}" class="table-bg-img"></td>
+												<td><a href="{% url_localized 'home:policies-detail' policy.pk %}">{{ policy.title__localized }}</a></td>
+												<td><div class="badge-date">{{ policy.updated_at__localized }}</div></td>
+												<td>
+													<div class="view-more-btn">
+														<a href="{% url_localized 'home:policies-detail' policy.pk %}" class="btn btn-warning">{% trans %}View more{% endtrans %}</a>
+													</div>
+												</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+								<div class="view-more-btn text-right pr-10">
+									<a href="{% url_localized 'home:policies-list' %}" class="btn btn-dark">{% trans %}View more{% endtrans %}</a>
+								</div>
+							</div>
+							{% endfor %}
+							
+						</div>
+					</div>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+		</div>
+	</section>
+
+{% endblock %}
+
+{% block script %}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.calendar').fullCalendar({
+                header: {
+                    left: 'title',
+                    center: '',
+                    right: 'prev,next'
+                },
+                weekends: false,
+                weekNumbers: true,
+                defaultView: 'month',
+                events: [{% for event in calendar_event %}{
+
+                    id:'{{ event.id }}',
+                    start: '{{ event.start_date|date:"Y-m-d" }}',
+                    end: '{{ event.end_date|date:"Y-m-d" }}',
+                    allDay: true,
+                    nextDayThreshold: '12:00:00',
+                    // rendering: 'background',
+                    backgroundColor: '#14468c;',
+                    borderColor: '#14468c;',
+                    title: '{{ event.title }}',
+                    textColor: '#fff;',
+                    className: 'event-full'
+                }, {% endfor %}],
+                eventClick: function(info) {
+                    var url = 'event/'+info.id
+                    window.open(url);
+                }
+                
+            });
+
+        });
+
+    </script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/jquery.marquee@1.6.0/jquery.marquee.min.js"></script>
+	<script>
+		/* news marquee */
+		$('.news-marquee-box').marquee({
+			duration: 12000,
+			delayBeforeStart: 0,
+			direction: 'left',
+			pauseOnHover: true,
+			duplicated: false,
+		});
+	</script>
+{% endblock %}

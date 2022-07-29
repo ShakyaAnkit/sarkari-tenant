@@ -1,0 +1,64 @@
+{% extends "dashboard/base/index.html" %} 
+
+{% load static %}
+
+{% block title %}{{ object.name }}{% endblock %}
+
+{% block subtitle %}{{ object.name }}{% endblock %}
+
+{% block head %}
+
+{% endblock %} 
+
+{% block content %}
+
+<div class="mdk-header-layout__content mdk-header-layout__content--fullbleed mdk-header-layout__content--scrollable page">
+    <div class="container-fluid page__container">
+        <div class="card card-form form-header-layout">
+            <div class="row no-gutters">
+                <div class="col-lg-12">
+                    <table class="table">
+                        <tr>
+                            <td>Name</td>
+                            <td> : </td>
+                            <td>{{ object.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Position</td>
+                            <td> : </td>
+                            <td>{{ object.position | default_if_none:'' }}
+                        </tr>
+                        <tr>
+                            <td>Level</td>
+                            <td> : </td>
+                            <td>{{ object.level | default_if_none:'' }}
+                        </tr>
+                        <tr>
+                            <td>Photo</td>
+                            <td> : </td>
+                            <td><img src="{{ object.get_photo }}" alt="" style="height: 50px;"></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td> : </td>
+                            <td>{{ object.email | default_if_none:'' }}
+                        </tr>
+                        <tr>
+                            <td>Phone No.</td>
+                            <td> : </td>
+                            <td>{{ object.phone_no | default_if_none:'' }}
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td> : </td>
+                            <td>{{ object.description |safe}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

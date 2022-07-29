@@ -1,0 +1,230 @@
+        {% load static %}
+		<style>
+			span.sidebar-menu-icon-right {
+				text-align: right;
+				padding-right: 3px;
+			}
+
+			[dir=ltr] .sidebar-submenu .sidebar-menu-text {
+				width: 100%;
+			}
+			span.sidebar-menu-badge {
+				text-align: right;
+				/* float: right; */
+				width: 100%;
+			}
+			</style>
+        <div class="mdk-drawer  js-mdk-drawer" id="default-drawer" data-align="start">
+			<div class="mdk-drawer__content">
+				<div class="sidebar sidebar-dark sidebar-left simplebar" data-simplebar>
+					<div class="d-flex align-items-center sidebar-p-a border-bottom sidebar-account flex-shrink-0">
+						<a href="{% url 'dashboard:index' %}" class="flex d-flex align-items-center text-underline-0 text-body">
+							<span class="mr-3">
+								<img src="{% if config.logo %}{{ config.logo.url }}{% else %}http://nepal.gov.np/splash/nepal-govt.png{% endif %}" width="80" height="80" alt="avatar">
+							</span>
+							<span class="flex d-flex flex-column">
+								<strong style="font-size: 1.125rem;">Dashboard<br></strong><small>v0.1.0</small>
+								<!-- <small class="text-muted text-uppercase" style="color: rgba(255,255,255,.54)">Bootstrap 4</small> -->
+							</span>
+						</a>
+						<div class="dropdown ml-auto">
+							<a href="#" data-toggle="dropdown" data-caret="false" class="text-muted"><i class="material-icons">keyboard_arrow_down</i></a>
+							<div class="dropdown-menu dropdown-menu-right">
+								<div class="dropdown-item-text dropdown-item-text--lh">
+									<div><strong>{{ user.get_full_name }}</strong></div>
+									<div>@{{user.username}}</div>
+								</div>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item active" href="{% url 'dashboard:index' %}">Dashboard</a>
+								
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="/logout">Logout</a>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="tab-content">
+						<div id="sm-menu" class="tab-pane show active" role="tabpanel" aria-labelledby="sm-menu-tab">
+							<ul class="sidebar-menu flex">
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:index' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">home</i>
+										<span class="sidebar-menu-text">Home</span>
+									</a>
+								</li>
+
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:notices-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">library_books</i>
+										<span class="sidebar-menu-text">Notices</span>
+									</a>
+								</li>
+
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:list-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">list</i>
+										<span class="sidebar-menu-text">List</span>
+									</a>
+								</li>
+
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:press-releases-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">new_releases</i>
+										<span class="sidebar-menu-text">Press Release</span>
+									</a>
+								</li>
+
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:bids-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">queue</i>
+										<span class="sidebar-menu-text">Requests for Bids</span>
+									</a>
+								</li>
+
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:publications-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">radio</i>
+										<span class="sidebar-menu-text">Publications</span>
+									</a>
+								</li>
+
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:policies-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">announcement</i>
+										<span class="sidebar-menu-text">Policies</span>
+									</a>
+								</li>
+
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:downloads-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">cloud_download</i>
+										<span class="sidebar-menu-text">Downloads</span>
+									</a>
+								</li>
+
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:projects-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">folder</i>
+										<span class="sidebar-menu-text">Projects</span>
+									</a>
+								</li>
+
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:events-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">event</i>
+										<span class="sidebar-menu-text">Events</span>
+									</a>
+								</li>
+
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:news-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">all_inbox</i>
+										<span class="sidebar-menu-text">News</span>
+									</a>
+								</li>
+								
+
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:hr-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">account_circle</i>
+										<span class="sidebar-menu-text">HR</span>
+									</a>
+								</li>
+								
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:sliders-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">image</i>
+										<span class="sidebar-menu-text">Sliders</span>
+									</a>
+								</li>
+								
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:albums-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">photo_library</i>
+										<span class="sidebar-menu-text">Albums</span>
+									</a>
+								</li>
+								
+								{% comment %} <li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:albums-photos-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">folder</i>
+										<span class="sidebar-menu-text">Album Photos</span>
+									</a>
+								</li> {% endcomment %}
+								
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:departments-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">person</i>
+										<span class="sidebar-menu-text">Subsidiary Departments</span>
+									</a>
+								</li>
+								
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:useful-links-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">attach_file</i>
+										<span class="sidebar-menu-text">Useful links</span>
+									</a>
+								</li>
+								
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:messages-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">message</i>
+										<span class="sidebar-menu-text">Messages</span>
+									</a>
+								</li>
+								
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:pages-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">pages</i>
+										<span class="sidebar-menu-text">Pages</span>
+									</a>
+								</li>
+								
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:navbar-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">work_outline</i>
+										<span class="sidebar-menu-text">Navbar</span>
+									</a>
+								</li>
+								
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:home-page-popup-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">receipt</i>
+										<span class="sidebar-menu-text">Home Page Popup</span>
+									</a>
+								</li>
+								
+								{% if request.user.is_superuser %}
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:users-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">person</i>
+										<span class="sidebar-menu-text">Users</span>
+									</a>
+								</li>
+								
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'dashboard:site-config-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">alarm</i>
+										<span class="sidebar-menu-text">Site Config</span>
+									</a>
+								</li>
+								{% endif %}
+								
+							
+							</ul>
+						</div>
+					</div>
+
+					<div class="mt-auto sidebar-p-a sidebar-b-t d-flex flex-column flex-shrink-0">
+						<!-- <a class="sidebar-link mb-2" href="#">Change Password</a>
+						<a class="sidebar-link mb-2" href="#">Settings</a> -->
+						<a class="sidebar-link" href="/logout">
+							Logout
+							<i class="sidebar-menu-icon ml-2 material-icons icon-16pt">exit_to_app</i>
+						</a>
+					</div>
+
+				</div>
+			</div>
+		</div>

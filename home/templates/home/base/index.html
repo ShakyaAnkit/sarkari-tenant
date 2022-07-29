@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% load localization %}
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{% block title %}{% endblock %}</title>
+	<link rel="icon" href="{% static 'home/assets/images/govern-logo.png' %}" type="image/x-icon">
+	<link href="https://fonts.googleapis.com/css?family=Mukta&amp;display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'home/assets/css/bootstrap.css' %}">
+	<link rel="stylesheet" href="{% static 'home/assets/css/all.css' %}">
+	<link rel="stylesheet" href="{% static 'home/assets/slick/slick.css' %}">
+	<link rel="stylesheet" href="{% static 'home/assets/slick/slick-theme.css' %}">
+	<link rel="stylesheet" href="{% static 'home/assets/css/animate.css' %}">
+	<link rel="stylesheet" href="{% static 'home/assets/css/jquery.fancybox.min.css' %}">
+	<link rel="stylesheet" href="{% static 'home/assets/css/newsite-templates.css' %}?v=1.3">
+	<!-- Nepali Patro -->
+	<link rel="stylesheet" type="text/css" href="{% static 'home/assets/css/nepalipatro.css' %}">
+	 <!-- Sweet Alert -->
+	 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.css">
+
+	<style type="text/css">
+		.banner-initial-slider > div {
+			visibility: hidden;
+		}
+
+		.banner-initial-slider > div:first-child{
+			visibility: visible;
+		}
+		.full-nav{
+			padding-right: 0px!important;
+    		padding-left: 0px !important;
+		}
+	</style>
+
+	<style>
+        .pradesh-title li {
+            margin-bottom: 10px;
+        }
+        .pradesh-title li:last-child {
+            margin-bottom: 0px;
+        }
+        .pradesh-title h5 {
+            color: #000;
+            font-weight: normal;
+        }
+
+        .pradesh-title h2 {
+            color: #af111c;
+        }
+        .language-translation img {
+            width: 80px;
+        }
+
+        .language-translation li {
+           margin-bottom: 10px;
+        }
+        
+        .language-translation li:last-child {
+           margin-bottom: 0px;
+        }
+
+
+        .nav-mobile-logo img {
+            width: 150px;
+        }
+
+        .nav-white-bgcolor {
+            background: transparent;
+            width: 100%;
+            box-shadow: none;
+        }
+
+        .nav-menu > li > a {
+            display: block;
+            color: #000;
+            padding: 20px 10px;
+        }
+
+        /* nav-aside */
+        .nav-aside-menu li.has-dropdown > a:after {
+            content: '' !important;
+        }
+
+        .nav-aside-menu li.has-dropdown .aside-i svg,
+        .nav-aside-menu li.has-dropdown .aside-i i {
+            color: #000;
+        }
+
+        .nav-aside-menu li.has-dropdown .aside-i svg:hover, .nav-aside-menu li.has-dropdown .aside-i svg:focus, .nav-aside-menu li.has-dropdown .aside-i svg:active,
+        .nav-aside-menu li.has-dropdown .aside-i i:hover,
+        .nav-aside-menu li.has-dropdown .aside-i i:focus,
+        .nav-aside-menu li.has-dropdown .aside-i i:active {
+            color: #e50311;
+        }
+
+        .nav-aside-menu li.has-dropdown .aside-i {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            cursor: pointer;
+            width: 100px;
+            text-align: right;
+            height: 58px;
+            line-height: 60px;
+        }
+
+        .stickyhero-tabs-container {
+            z-index: 119;
+        }
+
+        .stickyhero-tabs-container--top {
+            z-index: 119;
+        }
+        @media (max-width: 1240px) {
+            .nav-menu > li > a {
+                display: block;
+                color: #000;
+                padding: 20px 5px;
+            }
+        }
+
+        @media (min-width: 992px) and (max-width: 1199.98px) {
+            .nav-btns > button {
+                color: #fff;
+            }
+
+            .nav-btns > button {
+                width: 50px;
+                height: 50px;
+                line-height: 53px;
+                padding: 0px;
+            }
+
+            #nav-mobile {
+                height: 61.6px;
+                display: flex;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .navbar {
+                background: #14468c;
+                width: 100%;
+                box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            .pradesh-title h2 {
+                color: #fff;
+                font-size: 18px;
+            }
+
+            .pradesh-title h5 {
+                color: #aeaeae;
+                font-size: 16px;
+            }
+
+            .pradesh-title li {
+                margin-bottom: 5px;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .pradesh-title h2 {
+                color: #fff;
+                font-size: 16px;
+            }
+
+            .pradesh-title h5 {
+                color: #aeaeae;
+                font-size: 14px;
+            }
+        }
+
+		.post-body{
+			color: initial;
+		}
+
+		.post-body ul{
+			list-style: initial;
+			color: initial;
+			padding-left : 35px 
+		}
+		.post-body ol{
+			list-style: decimal;
+			color: initial;
+			padding-left : 35px;
+		}
+
+		.post-body img{
+			width: 100% !important;
+			height: auto !important;
+		}
+
+		.img-full-height.img-min-height {
+			height: 300px;
+		}
+		
+
+		/* nav fix */
+
+		#nav-aside {
+			padding-top: 50px;
+			padding-bottom: 20px;
+			z-index: 1102;
+		}
+
+	</style>
+
+
+	{% block head %}
+	{% endblock %}
+</head>
+
+<body>
+
+{% if home_popups.exists %}
+	{% for home_popup in home_popups %}
+	<section class="prixa-popup-display">
+		<div class="modal fade bd-example-modal-lg prixa-home-popup" id="homePopup{{ home_popup.pk }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<!-- <div class="prixa-popup-logo text-center">
+						<img src="{% static 'home/assets/images/govern-logo.png' %}" alt="logo" class="img-fluid">
+					</div> -->
+					<div class="modal-header prixa-popup-title">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="prixa-skip">skip this</span></button>
+					</div>
+					<div class="modal-body">
+						<div class="prixa-popup-headline mb-15 text-center">
+							<h3><a href="#">
+								{{ home_popup.title__localized }}</a></h3>
+						</div>
+						
+						{% if home_popup.photo %}
+						<div class="prixa-popup-img text-center">
+							<a href=""><img src="{{ home_popup.get_photo }}" class="img-fluid"></a>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	{% endfor %}
+{% else %}
+{% if request.path == '/' %}
+    <section class="prixa-popup-display">
+		<div class="modal fade bd-example-modal-lg" id="prixa-modalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<!-- <div class="prixa-popup-logo text-center">
+						<img src="/static/home/assets/images/govern-logo.png" alt="logo" class="img-fluid">
+					</div> -->
+					<div class="modal-header prixa-popup-title">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="prixa-skip">skip this</span></button>
+					</div>
+					<div class="modal-body">
+						<div class="prixa-popup-headline mb-15 text-center">
+							<h3><a href="#">
+								सुचना</a></h3>
+						</div>
+						<div class="prixa-popup-img text-center">
+							<a href=""><img src="https://ictp.lumbini.gov.np/media/popups/popup.jpg" class="img-fluid"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endif %} 
+{% endif %}
+
+	<section class="stickyhero-tabs navigation-section" id="nav">
+        <div class="header-height d-none d-lg-block">
+            <div class="header-logo">
+                <div class="container-fluid">
+                    <div class="flex-spaces">
+						{% if config.logo == '' or config.logo == None %}
+						<div class="nav-mobile-logo">
+							<a href="/" class="logo"><img src="{% static 'home/assets/images/govern-logo.png' %}" alt=""></a>
+						</div>
+						{% else %}
+						<div class="nav-mobile-logo">
+							<a href="/" class="logo"><img src="{{ config.logo.url }}" alt=""></a>
+						</div>
+						{% endif %}
+						
+						<div class="pradesh-title text-center pl-0">
+							<ul>
+								<li>
+									<h5>{{ config.header__localized|default:'हेडर' }}</h5>
+								</li>
+								<li>
+									<h5>{{ config.main_title__localized|default:'मुख्य शीर्षक' }}</h5>
+								</li>
+								<li>
+									<h2>{{ config.sub_title__localized|default:'उप शीर्षक' }}</h2>
+								</li>
+								<li>
+									<h5><b>{{ config.title_address__localized|default:'ठेगाना शीर्षक' }}</b></h5> 
+								</li>
+							</ul>
+						</div>
+						<div class="language-translation" style="min-width: 150px;">
+							<ul>
+								<li class="text-right">
+									<a href=""><img src="{% static 'home/assets/images/nepalflag.gif' %}" class="img-fluid"></a>
+								</li>
+
+								<li>
+									
+									<h5 class="text-right">
+										{% if locale == 'ne' %}
+										<a href="javascript:window.location.href='/en'+window.location.pathname">EN</a>
+										{% else %}
+										<a href="javascript:window.location.href=window.location.pathname.replace('/en/', '/')">ने</a>
+										{% endif %}
+
+										{% if config.facebook or config.twitter %}
+										<span style="color: #eee;">&nbsp;|</span>
+										{% endif %}
+
+										{% if config.facebook %}
+										<a href="{{ config.facebook }}" class="text-center d-inline-block" style="width: 30px;"><i class="fab fa-facebook-f"></i></a>
+										{% endif %}
+										{% if config.twitter %}
+										<a href="{{ config.twitter }}" class="text-center d-inline-block" style="width: 30px;"><i class="fab fa-twitter"></i></a>
+										{% endif %}
+									</h5>
+								</li>
+							</ul>
+						</div>
+					</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stickyhero-tabs-container navbar-expand-xl mobile-bg-texture-img">
+            <div class="navbar">
+                <div id="nav-mobile" class="position-relative">
+                    <div class="flex-spaces">
+                        <div class="flex-Center">
+                            {% if config.logo == '' or config.logo == None %}
+							<div class="mobile-nav-logo d-none d-block d-lg-none">
+								<a href="{% url_localized 'home:home' %}" class="logo"><img class="img-fluid" src="{% static 'home/assets/images/govern-logo.png' %}" alt=""></a>
+							</div>
+							{% else %}
+							<div class="mobile-nav-logo d-none d-block d-lg-none">
+								<a href="{% url_localized 'home:home' %}" class="logo"><img class="img-fluid" src="{{ config.logo.url }}" alt=""></a>
+							</div>
+							{% endif %}
+                            <div class="pradesh-title mobile-pradesh-title d-none d-block d-lg-none">
+                                <ul>
+                                    <li>
+                                        <h5>{{ config.header|default:'हेडर' }}</h5>
+                                    </li>
+                                    <li>
+                                        <h5>{{ config.main_title|default:'मुख्य शीर्षक' }}</h5>
+                                    </li>
+                                    <li>
+                                        <h2>{{ config.sub_title|default:'उप शीर्षक' }}</h2>
+                                    </li>
+                                    <li>
+                                       <h5><b>{{ config.title_address|default:'ठेगाना शीर्षक' }}</b></h5> 
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="nav-btns">
+                            <button class="aside-btn d-none d-block d-xl-none"><i class="fa fa-bars"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-fluid">
+                    <div id="nav-header" class="nav-white-bgcolor">
+                        <div class="collapse navbar-collapse">
+                            <ul class="nav-menu m-auto">
+                                <li><a href="{% url_localized 'home:home' %}">{% trans %}Home{% endtrans %}</a></li>
+								{% for parent in navbar %}
+									<li {% if parent.get_children.count > 0 %} class="has-dropdown position-relative" {% endif %}>
+										<a href="{{ parent.url__localized }}">{{ parent.title__localized }}</a>
+										{% if parent.get_children.count > 0 %}
+											<div class="dropdown">
+												<div class="dropdown-body">
+													<ul class="dropdown-list">
+													{% for children in parent.get_children.all %}
+														<li><a href="{{ children.url__localized }}">{{ children.title__localized }}</a></li>
+													{% endfor %}
+													</ul>
+												</div>
+											</div>
+										{% endif %}
+									</li>
+								{% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- nav-aside -->
+        <div id="nav-aside">
+            <ul class="nav-aside-menu">
+                <li><a href="{% url_localized 'home:home' %}">{% trans %}Home{% endtrans %}</a></li>
+				{% for parent in navbar %}
+					<li {% if parent.get_children.count > 0 %} class="has-dropdown position-relative" {% endif %}>
+						<a href="{{ parent.url__localized }}">{{ parent.title__localized }}</a>
+						{% if parent.get_children.count > 0 %}
+							<div class="aside-i"><i class="fas fa-caret-down"></i></div>
+							<ul class="dropdown">
+							{% for children in parent.get_children.all %}
+								<li><a href="{{ children.url__localized }}">{{ children.title__localized }}</a></li>
+							{% endfor %}
+							</ul>
+						{% endif %}
+					</li>
+				{% endfor %}
+            </ul>
+            <button class="nav-close nav-aside-close"><span></span></button>
+        </div>
+    </section>
+
+	{% block content %}
+	{% endblock %}
+
+	<footer class="footer header-footer-bg-color ">
+		<div class="container ">
+			<div class="footer-detail pt-30">
+				<div class="row">
+					<div class="col-lg-4 col-md-6">
+						<div class="footer-link-title pb-15">
+							<h4>
+								{% trans %}Useful Links{% endtrans %}
+							</h4>
+						</div>
+						<div class="footer-link-listing mobile-mb-30">
+							<ul>
+								{% for useful_link in useful_links %}
+								<li>
+									<a href="{{ useful_link.link }}" target="_blank">{{ useful_link.name__localized }}</a>
+								</li>
+								{% endfor %}
+
+								{% if not useful_detail %}
+								<li>
+									<a href="{% url_localized 'home:useful-links-list' %}" target="_blank"> {%trans%}View all{% endtrans %}</a>
+								</li>
+								{% endif %}
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-6">
+						<div class="footer-contact-title pb-15">
+							<h4>
+								{% trans %}Contact Address{% endtrans %}
+							</h4>
+						</div>
+						<div class="footer-contact-listing">
+							<ul>
+								<li> 
+									<span class="footer-icon"><i class="far fa-envelope"></i></span> 
+									<span class="footer-contact-icon-name">{% trans %}Email{% endtrans %} :&nbsp;</span> 
+									{{ config.email }}
+								</li>
+								<li>
+									<span class="footer-icon"><i class="fas fa-phone-square-alt"></i></span> 
+									<span class="footer-contact-icon-name">{% trans %}Phone{% endtrans %} :&nbsp;</span> 
+									{{ config.phone_no|default:'' }}
+								</li>
+
+								{% if config.fax %}
+								<li> 
+									<span class="footer-icon"><i class="fas fa-fax"></i></span> 
+									<span class="footer-contact-icon-name">{% trans %}Fax{% endtrans %} :&nbsp;</span> 
+									{{ config.fax|default:'' }}
+								</li>
+								{% endif %}
+
+								{% if config.audio_notice_board %}
+								<li> 
+									<span class="footer-icon"><i class="fas fa-bullhorn"></i></span> 
+									<span class="footer-contact-icon-name">{% trans %}Audio Notice Board{% endtrans %} :&nbsp;</span>
+									{{ config.audio_notice_board|default:'' }}
+								</li>
+								{% endif %}
+								
+								{% if config.pobox %}
+								<li> 
+									<span class="footer-icon"><i class="fas fa-file-alt"></i></span> 
+									<span class="footer-contact-icon-name">{% trans %}P. O. no.{% endtrans %} :&nbsp;</span> 
+									{{ config.pobox|default:'' }} 
+								</li>
+								{% endif %}
+								
+							</ul>
+						</div>
+					</div>
+					{% if config.latitude and config.longitude %}
+					<div class="col-lg-4 col-md-12">
+						<div id="googleMap" style="width:100%;height: 0; padding-bottom: 80%;"></div>
+					</div>
+					{% endif %}
+				</div>
+			</div>
+			<hr class="hr-border-color"> 
+			<div class="footer-middle flex-spaces pb-15">
+				<div class="footer-copyright ">					
+					© {% trans %}All Rights Reserved{% endtrans %} {% if locale == 'ne' %}२०७८{% else %}2078{% endif %}
+					<!-- <script>
+						document.write(new Date().getFullYear());
+					</script> &nbsp; | &nbsp; All rights reserved. -->
+				</div>
+
+				
+			</div>
+		</div>
+	</footer>
+
+
+	<a href="# " class="scrollToTop " title="click here for top "><i class="fas fa-arrow-up "></i></a>
+	<script src="{% static 'home/assets/js/jquery-3.5.1.slim.min.js' %}"></script>
+	<script src="{% static 'home/assets/js/jquery.min.js' %}"></script>
+	<script src="{% static 'home/assets/js/popper.min.js' %}"></script>
+	<script src="{% static 'home/assets/js/jquery.easing.min.js' %}"></script>
+	<script src="{% static 'home/assets/js/bootstrap.js' %}"></script>
+	<script src="{% static 'home/assets/js/all.js' %}"></script>
+	<script src="{% static 'home/assets/js/main.js' %}"></script>
+	<!-- Nepali Patro -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+	<script src="{% static 'home/assets/js/nepalipatro.js' %}"></script>
+
+	<!-- Sweet Alert -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.js"></script>
+
+	<script src="{% static 'home/assets/slick/slick.js' %}" type="text/javascript "></script>
+	<script src="{% static 'home/assets/js/jquery.fancybox.min.js' %}"></script>
+
+	<script type="text/javascript ">
+
+		$('.has-dropdown .aside-i').on('click', function() {
+			$(this).parent().toggleClass('active');
+		});
+
+
+		$('a[href="#"]').click(function(e){
+			e.preventDefault();
+		})
+
+		$('.prixa-headline-heading').css({
+				'visibility': 'hidden'
+			}
+
+		);
+		$('.prixa-headline-background').css({
+				'visibility': 'hidden'
+			}
+
+		);
+
+		$('.prixa-headline-date').css({
+				'visibility': 'hidden'
+			}
+
+		);
+		$(document).ready(function() {
+				$('banner-initial-slider').on('init', function(event, slick) {
+					$('banner-initial-slider div').css({
+						visibility: 'visible'
+					});
+				});
+				$('.banner-initial-slider').slick({
+					autoplay: true,
+					autoplaySpeed: 5000,
+					slidesToShow: 1,
+					fade: true,
+					infinite: true,
+					speed: 1000,
+					pauseOnHover: true,
+					slidesToScroll: 1,
+					dots: true,
+					cssEase: 'ease',
+					draggable: true,
+					arrows: false
+				});
+				setTimeout(() => {
+					headingAnimationClass = $('.slick-active .prixa-headline-heading').data('animation-css');
+					backgroundAnimationClass = $('.slick-active .prixa-headline-background').data('animation-css');
+					dateAnimationClass = $('.slick-active .prixa-headline-date').data('animation-css');
+					$('.slick-active .prixa-headline-heading').css({
+						'visibility': 'visible'
+					});
+					$('.slick-active .prixa-headline-background').css({
+						'visibility': 'visible'
+					});
+					$('.slick-active .prixa-headline-date').css({
+						'visibility': 'visible'
+					});
+					$('.slick-active .prixa-headline-heading').addClass(headingAnimationClass);
+					$('.slick-active .prixa-headline-background').addClass(backgroundAnimationClass);
+					$('.slick-active .prixa-headline-date').addClass(dateAnimationClass);
+				}, 100);
+				// animation on change
+				$(".banner-initial-slider ").on("afterChange ", function() {
+					$('.prixa-headline-heading').css({
+						'visibility': 'hidden'
+					});
+					$('.prixa-headline-background').css({
+						'visibility': 'hidden'
+					});
+					$('.prixa-headline-date').css({
+						'visibility': 'hidden'
+					});
+					if ($('.slick-active .prixa-headline-heading').hasClass('animation-css')) {
+						// getting animation class
+						headingAnimationClass = $('.slick-active .prixa-headline-heading').data('animation-css');
+						backgroundAnimationClass = $('.slick-active .prixa-headline-background').data('animation-css');
+						dateAnimationClass = $('.slick-active .prixa-headline-date').data('animation-css');
+						$('.slick-active .prixa-headline-heading').removeClass(headingAnimationClass);
+						$('.slick-active .prixa-headline-background').addClass(backgroundAnimationClass);
+						$('.slick-active .prixa-headline-date').addClass(dateAnimationClass);
+						setTimeout(() => {
+							$('.slick-active .prixa-headline-heading').css({
+								'visibility': 'visible'
+							});
+							$('.slick-active .prixa-headline-background').css({
+								'visibility': 'visible'
+							});
+							$('.slick-active .prixa-headline-date').css({
+								'visibility': 'visible'
+							});
+							$('.slick-active .prixa-headline-heading').addClass(headingAnimationClass);
+							$('.slick-active .prixa-headline-background').addClass(backgroundAnimationClass);
+							$('.slick-active .prixa-headline-date').addClass(dateAnimationClass);
+						}, 100);
+					}
+				});
+			}
+
+		);
+	</script>
+
+	<script>
+		$('.caption-slider').slick({
+			autoplay: false,
+			autoplaySpeed: 4500,
+			cssEase: 'ease-out',
+			arrows: false,
+			slidesToShow: 4,
+			infinite: true,
+			variableWidth: false,
+			pauseOnHover: true,
+			slidesToScroll: 1,
+			dots: true,
+			responsive: [{
+					breakpoint: 1200,
+					settings: {
+						slidesToShow: 3,
+						slidesToScroll: 1
+					}
+				}, {
+					breakpoint: 768,
+					settings: {
+						slidesToShow: 2,
+						slidesToScroll: 1
+					}
+				},
+
+				{
+					breakpoint: 567,
+					settings: {
+						slidesToShow: 1,
+						slidesToScroll: 1
+					}
+				}
+			]
+		});
+	</script>
+	 <script>
+        // Sweet alert
+        {% for message in messages %}
+        {% if message.level == 20 %}
+            var swal_type = 'info';	
+        {% elif message.level == 25 %}
+            var swal_type = 'success';			
+        {% elif message.level == 30 %}
+            var swal_type = 'warning';		
+        {% elif message.level == 40 %}
+            var swal_type = 'error';	
+        {% endif %}	
+
+        Swal.fire({
+            position: 'top-end',
+            type: swal_type,
+            title: '{{ message }}',
+            showConfirmButton: false,
+            timer: 2000
+        })
+        {% endfor %}
+    </script>
+   
+	{% if home_popup %}
+	<script type="text/javascript">
+		/*
+		NOTE: HIDE AD BLOCK IS CURRENTLY DISABLED. DO NOT DELETE, MIGHT BE USED IN FUTURE
+		*/
+		/*
+		$(document).ready(function() {
+			$('#prixa-modalCenter').modal('show');
+			$('#prixa-modalCenter').modal('handleUpdate');
+
+			setTimeout(function() {
+				hideAdBlock();
+			}, 10000);
+
+
+			function hideAdBlock() {
+				$("#prixa-modalCenter").modal('hide');
+			}
+		});
+		*/
+	</script>
+	{% endif %}
+
+	<script>
+		/* HOME PAGE POPUP */
+		$('.prixa-home-popup').modal('show');
+	</script>
+
+	<!-- GOOGLE MAPS -->
+	{% if config.latitude and config.longitude %}
+	<script>
+		function loadMap() {
+			var coordinates = new google.maps.LatLng({{ config.latitude }}, {{ config.longitude }});
+
+			var mapProp= {
+				center: coordinates,
+				zoom: 15,
+			};
+			var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+			var marker = new google.maps.Marker({
+				position: coordinates,
+				map: map,
+			});
+		}
+	</script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlVH5hJDqvszG08e8gU7MoPEnoZfovnDk&amp;callback=loadMap"></script>
+	{% endif %}
+
+	{% block script %}
+	{% endblock %}
+
+</body>
+
+</html>

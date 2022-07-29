@@ -1,0 +1,56 @@
+{% extends "home/base/index.html" %} 
+
+{% load static %}
+{% load nepaliDate %}
+{% load regtags %}
+{% load localization %}
+
+{% block title %}{{ object.title__localized }} | {{ config.website_title|default:'वेबसाइट शीर्षक' }}{% endblock %}
+
+{% block content %}
+
+	<section class="breadcrump-section">
+		<div class="breadcrump-bgimg" style="background-image: url({% static 'home/assets/images/mt-everest.jpg' %});">
+			<div class="breadcrumb-overlay-text text-center">
+				
+				<div class="breadcrumb-title mb-15">
+					<h1>{{ object.title__localized }}</h1>
+				</div>
+
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="{% url 'home:home' %}">{% trans %}Home{% endtrans %}</a></li>
+						<li class="breadcrumb-item active" aria-current="page">{{ object.title__localized }}</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+	</section>
+
+	<section class="section list-desciption-section">
+		<div class="container">
+
+			<div class="mb-30">
+				<div class="mb-30 post-body">
+					{% if object.photo %}<img src="{{ object.photo.url }}" class="img-fluid mb-3">{% endif %}
+					<div class="paragh-font-20 mb-10" style="{% if object.page_margin %}margin: auto; max-width: 700px;{% endif %}  width: 100%;">
+						<div>
+							{{ object.description|safe }}
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+		</div>
+	</section>
+{% endblock %}
+
+
+{% block script %}
+<script>
+	$(document).ready(function(){
+		$('.post-body table').wrap('<div class="table-responsive"></div>');
+	})
+</script>
+{% endblock %}

@@ -1,0 +1,180 @@
+{% extends "home/base/index.html" %} 
+
+{% load static %}
+{% load nepaliDate %}
+{% load localization %}
+
+{% block title %}{{ config.website_title__localized|default:'वेबसाइट शीर्षक' }}{% endblock %}
+
+{% block content %}
+
+	<section class="breadcrump-section">
+		<div class="breadcrump-bgimg" style="background-image: url({% static 'home/assets/images/mt-everest.jpg' %});">
+			<div class="breadcrumb-overlay-text text-center">
+				
+				<div class="breadcrumb-title mb-15">
+					<h1>{{ news.title }}</h1>
+				</div>
+
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="{% url_localized 'home:home' %}">{% trans %}Home{% endtrans %}</a></li>
+						<li class="breadcrumb-item"><a href="{% url_localized 'home:events-list' %}">{% trans %}Events{% endtrans %}</a></li>
+						<li class="breadcrumb-item active" aria-current="page">{{ object.title__localized }}</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+    </section>
+{% if object %}
+    <section class="section calendar-section ">
+        <div class="container">
+            <div class="calendar-layout mb-30">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="sticky-sidebar">
+                            <div class="mb-30">
+                                <div class="features-category">
+                                    <span class="features-category-title box-shadow-effect"> 
+                                        {{ object.title__localized }}</span>
+                                </div>
+                            </div>
+
+                            <div class="program-time-table mb-30">
+                                <div class="outer-bgcolor">
+                                    <div class="inner-bgcolor">
+                                        <div class="program-sheduled">
+                                            <div class="event-date">
+                                                <div class="flex-Center mb-30">
+                                                    <div class="event-icon">
+                                                        <img src="{% static 'home/assets/images/calendar.png' %}">
+                                                    </div>
+                                                    <div class="event-program-time">
+                                                        <div class="mbtm-5">
+                                                            {% if object.start_date %}<p>{% trans %}Start Date{% endtrans %}: {{ object.start_date__localized }}</p>{% endif %}
+                                                        </div>
+                                                        {% if object.end_date %}<p>{% trans %}End Date{% endtrans %}: {{ object.end_date__localized }}</p>{% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- <div class="event-date">
+                                                <div class="flex-Center mb-30">
+                                                    <div class="event-icon">
+                                                        <img src="{% static 'home/assets/images/clock.png' %}">
+                                                    </div>
+                                                    <div class="event-program-time">
+                                                        <p>विहान ९ बजे</p>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                        {% if object.location %}
+                                            <div class="event-date">
+                                                <div class="flex-Center mb-30">
+                                                    <div class="event-icon">
+                                                        <img src="{% static 'home/assets/images/location.png' %}">
+                                                    </div>
+                                                    <div class="event-program-time">
+                                                        {% comment %} <div class="mbtm-5">
+                                                            <p>स्थान टाइगर प्यालेस रिसोर्ट आयोजक तिलोत्तमा</p>
+                                                        </div> {% endcomment %}
+                                                        <p>{{ object.location__localized }}</p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% if object.description %}
+                            <div style="margin-top: 20px;">
+                                <p>{{ object.description|safe }}</p>
+                            </div>
+                        {% endif %}
+
+                            <!-- <div class="view-more-btn text-left mb-30">
+                                <button type="button" class="btn btn-dark">   सबै कार्यक्रमहरू </button>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+
+                        {% if object.document_file %}
+                            {% if object.is_pdf %}
+                                <div class="list-attached-file mb-30">
+                                    <a title="" target="_blank" href="{{ object.document_file.url }}" data-original-title="">
+                                        <img src="{{ object.file_image }}" class="table-bg-img" style="max-width: 50px;">
+                                        <div class="mt-15">
+                                            <small>{{ object.document_file.filename }}</small>
+                                            <div>{% trans %}Click here to download{% endtrans %}</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% else %}
+                                <div class="list-attached-file mb-30">
+                                    <a title="" target="_blank" href="{{ object.document_file.url }}" data-original-title="">
+                                        <img src="{{ object.file_image }}" class="table-bg-img" style="max-width: 50px;">
+                                        <div class="mt-15">
+                                            <small>{{ object.document_file.filename }}</small>
+                                            <div>{% trans %}Click here to download{% endtrans %}</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if other_events %}
+                        <div class="calendar-list-block">
+
+                            <div class="mb-30">
+                                <div class="features-category">
+                                    <span class="features-category-title box-shadow-effect">{% trans %}Other Events{% endtrans %}
+                                        </span>
+                                </div>
+                            </div>
+                            <ul class="description-heading-font">
+                            {% for event in other_events %}    
+                                <li class="flex-Center mb-30">
+                                    <div class="desc-date mr-15">
+                                        <div href="#" class="table-calendar-date">
+                                            <div class="table-calendar-day">
+												{% if locale == 'ne' %}
+												{{ event.start_date|nep_date }}
+												{% else %}
+												{{ event.start_date|date:'d' }}
+												{% endif %}
+											</div>
+                                            <div class="table-calendar-month">
+												{% if locale == 'ne' %}
+												{{ event.start_date|nep_month }}
+												{% else %}
+												{{ event.start_date|date:'M' }}
+												{% endif %}
+											</div>
+                                        </div>
+                                    </div>
+                                    <div class="calendar-events-program ">
+                                        <div class="calendar-events-title mb-10"><a href="{% url_localized 'home:event-detail' event.id %}">{{ event.title__localized|truncatechars:50 }}</a></div>
+                                        <div class="calendar-events-location "><i class="fas fa-map-marker-alt "></i>&nbsp;{{ event.location__localized }} </div>
+                                    </div>
+                                </li>
+                            {% endfor %}      
+                            </ul>
+                            {% comment %} <div class="view-more-btn text-right mt-15">
+                                <button type="button" class="btn btn-dark">थप हेर्नुहोस्</button>
+                            </div> {% endcomment %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+{% endblock %}
+
+{% block script %}
+{% endblock %}

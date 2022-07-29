@@ -1,0 +1,184 @@
+{% extends "home/base/index.html" %} 
+
+{% load static %}
+{% load nepaliDate %}
+{% load localization %}
+
+{% block title %}{{ object.name }}| {% trans %}Members{% endtrans %} | {{ config.website_title__localized|default:'वेबसाइट शीर्षक' }}{% endblock %}
+
+{% block head %}
+	<style>
+		.ck-description p{
+			margin-bottom: 15px;
+		}
+	</style>
+{% endblock %}
+
+{% block content %}
+
+	<section class="breadcrump-section">
+		<div class="breadcrump-bgimg" style="background-image: url({% static 'home/assets/images/mt-everest.jpg' %});">
+			<div class="breadcrumb-overlay-text text-center">
+				
+				<div class="breadcrumb-title mb-15">
+					<h1>{{ object.name__localized }}</h1>
+				</div>
+
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="{% url_localized 'home:home' %}">{% trans %}Home{% endtrans %}</a></li>
+						<li class="breadcrumb-item"><a href="{% url_localized 'home:hr-list' %}">{% trans %}Members{% endtrans %}</a></li>
+						<li class="breadcrumb-item active" aria-current="page">{{ object.name__localized }}</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+	</section>
+
+	<section class="section list-desciption-section">
+		<div class="container">
+			<div class="mb-30 flex-spaces">
+				<div class="features-category">
+					<span class="features-category-title box-shadow-effect"> 
+						{{ object.position__localized }}</span>
+				</div>
+				{% comment %} <div class="profile-table-social-icon">
+					<ul>
+						<li>
+							<a href="#"><i class="fab fa-facebook-f"></i></a>
+						</li>
+						<li>
+							<a href="#"><i class="fab fa-twitter"></i></a>
+						</li>
+					</ul>
+				</div> {% endcomment %}
+			</div>
+
+			<div class="mb-30">
+				<div class="row">
+					<div class="col-lg-4 col-md-4">
+						<div class="sticky-sidebar">
+							<div class="profile-table-img">
+								<img src="{{ object.get_photo }}">
+							</div>
+							<div class="profile-table-img-name pt-30 text-center">
+								<ul>
+									<li>
+										<h2>{{ object.name }}</h2>
+									</li>
+									{% if object.level %}
+										<li>
+											<h5>{{ object.level }}</h5>
+										</li>
+									{% endif %}
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-8 col-md-8">
+						<div class="overflow-auto scrollbar-css mb-15 profile-table-detail mobile-mtop-30">
+							<div class="profile-table-detail-title mb-30">
+								<h3>{% trans %}Personal Details{% endtrans %}</h3>
+							</div>
+							<table class="table table-height">
+								<tbody class="table-hover-css">
+									<tr>
+										<th>{% trans %}Name{% endtrans %}</th>
+										<td>{{ object.name }}
+										</td>
+									</tr>
+
+									{% if object.date_of_birth %}
+									<tr>
+										<th>{% trans %}Date of Birth{% endtrans %}</th>
+										<td>
+											{% if object.date_of_birth %}{{ object.date_of_birth__localized }}{% endif %}
+										</td>
+									</tr>
+									{% endif %}
+
+									{% if object.contact_address %}
+									<tr>
+										<th>{% trans %}Contact Address{% endtrans %}</th>
+										<td>{{ object.contact_address|default_if_none:'' }}
+										</td>
+									</tr>
+									{% endif %}
+
+									{% if object.phone_no %}
+									<tr>
+										<th>{% trans %}Telephone no.{% endtrans %}</th>
+										<td>{{ object.phone_no|default_if_none:'' }}
+										</td>
+									</tr>
+									{% endif %}
+
+									{% if object.email %}
+									<tr>
+										<th>{% trans %}Email{% endtrans %}</th>
+										<td>{{ object.email|default_if_none:'' }}
+										</td>
+									</tr>
+									{% endif %}
+
+									{% if object.permanent_address %}
+									<tr>
+										<th>{% trans %}Permanent Address{% endtrans %}</th>
+										<td>{{ object.permanent_address|default_if_none:'' }}
+										</td>
+									</tr>
+									{% endif %}
+
+
+								</tbody>
+							</table>
+
+							
+						</div>
+
+						<div class="mt-5 ck-description">
+							{{ object.description|default_if_none:''|safe }}
+						</div>
+
+						{% comment %} <div class="overflow-auto scrollbar-css mb-15 profile-table-detail mobile-mtop-30">
+							<div class="profile-table-detail-title mb-30">
+								<h3>Job Details and Professional Experiences</h3>
+							</div>
+							<table class="table table-height">
+								<tbody class="table-hover-css">
+									<tr>
+										<th>Currently</th>
+										<td>Chief Secretary, Office of the Prime Minister and Council of Ministers
+										</td>
+									</tr>
+
+									<tr>
+										<th>2016-2017</th>
+										<td>Home Secretary, Ministry of Home Affairs, Government of Nepal
+										</td>
+									</tr>
+
+									<tr>
+										<th>2015-2016</th>
+										<td>Finance Secretary, Ministry of Finance, Government of Nepal
+										</td>
+									</tr>
+
+
+								</tbody>
+							</table>
+
+						</div> {% endcomment %}
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+
+{% endblock %}
+
+{% block script %}
+	
+{% endblock %}

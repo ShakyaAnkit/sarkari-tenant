@@ -1,0 +1,80 @@
+        {% load static %}
+		<style>
+			span.sidebar-menu-icon-right {
+				text-align: right;
+				padding-right: 3px;
+			}
+
+			[dir=ltr] .sidebar-submenu .sidebar-menu-text {
+				width: 100%;
+			}
+			span.sidebar-menu-badge {
+				text-align: right;
+				/* float: right; */
+				width: 100%;
+			}
+			</style>
+        <div class="mdk-drawer  js-mdk-drawer" id="default-drawer" data-align="start">
+			<div class="mdk-drawer__content">
+				<div class="sidebar sidebar-dark sidebar-left simplebar" data-simplebar>
+					<div class="d-flex align-items-center sidebar-p-a border-bottom sidebar-account flex-shrink-0">
+						<a href="{% url 'client:dashboard' %}" class="flex d-flex align-items-center text-underline-0 text-body">
+							<span class="mr-3">
+								<img src="https://prixa.net/static/frontend/images/logo/logo-footer.png" width="80" height="50" alt="avatar">
+							</span>
+							<span class="flex d-flex flex-column">
+								<strong style="font-size: 1.125rem;">Prixa <br></strong><small>v2.0.1</small>
+								<!-- <small class="text-muted text-uppercase" style="color: rgba(255,255,255,.54)">Bootstrap 4</small> -->
+							</span>
+						</a>
+						<div class="dropdown ml-auto">
+							<a href="#" data-toggle="dropdown" data-caret="false" class="text-muted"><i class="material-icons">keyboard_arrow_down</i></a>
+							<div class="dropdown-menu dropdown-menu-right">
+								<div class="dropdown-item-text dropdown-item-text--lh">
+									<div><strong>{{ user.get_full_name }}</strong></div>
+									<div>@{{user.username}}</div>
+								</div>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item active" href="{% url 'client:dashboard' %}">Dashboard</a>
+								
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="/logout">Logout</a>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="tab-content">
+						<div id="sm-menu" class="tab-pane show active" role="tabpanel" aria-labelledby="sm-menu-tab">
+							<ul class="sidebar-menu flex">
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'client:dashboard' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">home</i>
+										<span class="sidebar-menu-text">Home</span>
+									</a>
+								</li>
+
+								<li class="sidebar-menu-item">
+									<a class="sidebar-menu-button" href="{% url 'client:clients-list' %}">
+										<i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">public</i>
+										<span class="sidebar-menu-text">Sites</span>
+									</a>
+								</li>
+								
+							
+							</ul>
+						</div>
+					</div>
+
+					<div class="mt-auto sidebar-p-a sidebar-b-t d-flex flex-column flex-shrink-0">
+						<!-- <a class="sidebar-link mb-2" href="#">Change Password</a>
+						<a class="sidebar-link mb-2" href="#">Settings</a> -->
+						<a class="sidebar-link" href="/logout">
+							Logout
+							<i class="sidebar-menu-icon ml-2 material-icons icon-16pt">exit_to_app</i>
+						</a>
+					</div>
+
+				</div>
+			</div>
+		</div>

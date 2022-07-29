@@ -1,0 +1,734 @@
+/* npcalendar */
+
+.np-container {
+    max-width: 945px;
+}
+
+.npcalendar-btn {
+    display: inline-block;
+    font-weight: 600;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 1px solid #efefef;
+    padding: .375rem .875rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.npcalendar-btn:hover {
+    color: #212529;
+    cursor: pointer;
+    background-color: #ececec;
+    border-color: #d6d6d6;
+}
+
+.npcalendar-next-btn,
+.npcalendar-prev-btn {
+    display: inline-block;
+    font-weight: 600;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 1px solid #efefef;
+    padding: 1px 6px;
+    padding-top: 5px;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.npcalendar-next-btn:hover,
+.npcalendar-prev-btn:hover {
+    color: #212529;
+    cursor: pointer;
+    background-color: #ececec;
+    border-color: #d6d6d6;
+}
+
+.npcalendar .npcalendar-weeks {
+    display: flex;
+    border-top: 1px solid #ebebeb;
+    border-left: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+    background: #dbdfe4;
+    font-family: 'Mukta', sans-serif;
+}
+
+.npcalendar .npcalendar-weeks .npcalendar-weeks-name {
+    width: 135px;
+    padding: 10px 0;
+    text-align: center;
+    border-right: 1px solid #ebebeb;
+}
+
+.npcalendar .npcalendar-days .npcalendar-days-count {
+    position: relative;
+    width: 135px;
+    height: 110px;
+    text-align: center;
+    border-right: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    cursor: pointer;
+    background: #fff;
+    font-family: 'Mukta', sans-serif;
+}
+
+.npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-event {
+    font-size: 12px;
+    width: 100%;
+    position: absolute;
+    z-index: 99;
+    left: 0;
+    bottom: 5px;
+    text-align: center;
+    line-height: 15px;
+}
+
+.npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-nep-days {
+    width: 100%;
+    position: relative;
+    z-index: 96;
+    font-size: 35px;
+    font-weight: 400;
+    line-height: 108px;
+}
+
+.npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-tithi {
+    font-size: 12px;
+    position: absolute;
+    z-index: 97;
+    right: 10px;
+    top: 8px;
+    text-align: right;
+    line-height: 15px;
+}
+
+.npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-eng-days {
+    font-size: 12px;
+    position: absolute;
+    z-index: 98;
+    left: 4px;
+    width:100%;
+    text-align: left;
+    top: 8px;
+    line-height: 15px;
+}
+
+
+.npcalendar .npcalendar-days {
+    display: flex;
+}
+
+.fc-day-number {
+    float: left;
+}
+
+.npcalendar-english-event {
+    position: absolute;
+    bottom: 38px;
+    width: 100%;
+    text-align: center;
+    left: 0;
+    color: white;
+    background: blue;
+}
+
+.npcalendar .npcalendar-days .npcalendar-days-holiday {
+    color: #d10b15;
+}
+
+.npcalendar .npcalendar-days-table {
+    border-left: 1px solid #e5e5e5;
+    font-family: 'Mukta', sans-serif;
+}
+
+.npcalendar .npcalendar-days .npcalendar-days-count:hover {
+    background: #eeee;
+}
+
+.npcalendar .npcalendar-days .npcalendar-days-disable {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.npcalendar .npcalendar-days-count.npcalendar-date-today {
+    background: #113088;
+    color: #fff;
+    /* pointer-events: none; */
+}
+
+.npcalendar .npcalendar-next-prev {
+    display: flex;
+    font-family: 'Mukta', sans-serif;
+}
+
+.npcalendar .npcalendar-nepali-date button,
+.npcalendar .npcalendar-english-date button {
+    text-transform: uppercase;
+}
+
+.npcalendar .npcalendar-next-prev {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.npcalendar .npcalendar-english-date {
+    position: absolute;
+    right: 0;
+}
+
+.npcalendar .npcalendar-nepali-date {
+    position: absolute;
+    left: 0;
+}
+
+.npcalendar .npcalendar-next-prev .select2-container--default .select2-selection--single {
+    color: #212529;
+    font-weight: bold;
+}
+
+.npcalendar .npcalendar-arrow {
+    display: inline-flex;
+    margin: auto;
+}
+
+.events-table {
+    display: block;
+    position: absolute;
+    width: 100%;
+    z-index: 200;
+    text-align: center;
+    /* background:grey; */
+    top: 27px;
+}
+
+.events-table-1,
+.events-table-2 {
+    /* border:1px solid black; */
+    height: 18px;
+    width: 100%;
+    z-index: 3;
+    display: flex;
+}
+
+.events-table-2 {
+    /* background:green; */
+    margin-top: 3px;
+}
+
+.npcalendar-days {
+    position: relative;
+}
+
+.flex-1,
+.flex-2,
+.flex-3,
+.flex-4,
+.flex-5,
+.flex-6,
+.flex-7 {
+    text-align: center;
+    line-height: 5px;
+}
+
+.flex-1 {
+    flex-grow: 1;
+}
+
+.flex-2 {
+    flex-grow: 2;
+}
+
+.flex-3 {
+    flex-grow: 3;
+}
+
+.flex-4 {
+    flex-grow: 4;
+}
+
+.flex-5 {
+    flex-grow: 5;
+}
+
+.flex-6 {
+    flex-grow: 6;
+}
+
+.flex-7 {
+    flex-grow: 7;
+}
+
+.event-flex {
+    position: relative;
+    background: #069b08;
+    color: white;
+    border-radius: 3px;
+    border: 1px solid #444
+}
+
+.event-flex span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    font-size: 12px;
+    transform: translate(-50%, -50%);
+    /* height:20px; */
+}
+
+.event-gap {
+    flex-grow: 1;
+    z-index: 100
+}
+
+.events {
+    font-size: 12px;
+    position: absolute;
+    z-index: 99;
+    left: 5px;
+    text-align: left;
+    bottom: 4px;
+    text-decoration: none;
+    color: #069b08;
+
+}
+
+.nepali-event-hide {
+    display:none;
+}
+
+.npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-nep-days-e {
+    /* width: 100%; */
+    position: absolute;
+    z-index: 96;
+    font-size: 25px;
+    font-weight: 400;
+    text-align: center;
+    top:-4px;
+    right: 5px;
+    /* line-height: 108px; */
+}
+
+.npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-tithi-e {
+    font-size: 12px;
+    position: absolute;
+    z-index: 97;
+    right: 10px;
+    /* top: 8px; */
+    text-align: center;
+    line-height: 15px;
+    bottom: 0px;
+}
+
+.npcalendar .npcalendar-days-table .events-table .events-table-1 .event-flex span{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    font-size: 12px;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-overflow:ellipsis;
+    white-space : nowrap;
+    overflow: hidden;
+    line-height:10px;
+   
+}
+
+.npcalendar .npcalendar-days .npcalendar-days-count .events-2 {
+    display:none;
+}
+
+.has-event {
+    width: auto !important;
+    line-height: 0 !important;
+    top:15px !important;
+}
+
+.holiday-text {
+    padding-left: 30px !important;
+}
+
+@media (min-width: 993px) and (max-width: 1200px) {
+    .npcalendar .npcalendar-days .npcalendar-days-count {
+        width: 135px;
+        height: 100px;
+    }
+
+    .npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-nep-days {
+        /* line-height: 95px; */
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 992px) {
+    .npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-event {
+        display: none;
+    }
+
+    .npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-nep-days {
+        width: 100%;
+        position: relative;
+        z-index: 96;
+        font-size: 25px;
+        /* line-height: 90px; */
+    }
+
+    /* .npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-tithi {
+        display: inline !important;
+    } */
+
+    .npcalendar .npcalendar-days .npcalendar-days-count .events-2 {
+        display: inline-block;
+        font-size: 12px;
+        position: relative;
+        z-index: 99;
+        left: -58px;
+        top:59px;
+        /* width: 100%; */
+        /* text-align: left; */
+
+        bottom: -41px;
+        text-decoration: none;
+        color: #069b08;
+    }
+
+
+    .npcalendar .npcalendar-days .npcalendar-days-count .events {
+        display: none;
+    }
+
+    .npcalendar .npcalendar-days .npcalendar-days-count {
+        height: 80px;
+    }
+
+    .npcalendar .npcalendar-weeks .npcalendar-weeks-name {
+        font-size: 12px;
+    }
+
+    .npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-eng-days {
+        font-size: 12px;
+        position: absolute;
+        z-index: 97;
+        /* right: 10px; */
+        /* bottom: 5px; */
+        width:100%;
+        text-align: left;
+        line-height: 15px;
+        top: 6px;
+        left:3;
+    }
+
+
+    .npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-tithi {
+        font-size: 12px;
+        position: absolute;
+        z-index: 97;
+        text-align: right;
+        line-height: 15px;
+        bottom: 0px;
+        top:unset;
+
+    }
+
+    .npcalendar .npcalendar-weeks .npcalendar-weeks-name {
+        line-height: 15px;
+    }
+
+    .npcalendar .npcalendar-days .events-table .events-table-2 {
+        display: none;
+    }
+
+    .has-event {
+        width: auto !important;
+        line-height: 0 !important;
+        top:8px !important;
+        right:-40px !important;
+    }
+
+    .holiday-text {
+        bottom: -53px;
+        position: relative;
+        padding:0;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-nep-days {
+        width: 100%;
+        position: relative;
+        z-index: 96;
+        font-size: 15px;
+        line-height: 50px;
+    }
+
+    .npcalendar .npcalendar-weeks .npcalendar-weeks-name {
+        font-size: 11px;
+        padding: 5px 0px;
+    }
+
+    .npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-eng-days {
+        top: inherit;
+        font-size: 8px;
+        width: 100%;
+        position: absolute;
+        z-index: 99;
+        left: 6px;
+        top: 0px;
+        /* bottom: 0px; */
+        text-align: left;
+        line-height: 15px;
+    }
+
+    .npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-tithi {
+        font-size: 8px;
+        position: absolute;
+        z-index: 97;
+        right: 10px;
+        /* top: 8px; */
+        text-align: right;
+        line-height: 15px;
+        bottom: 0px;
+    }
+
+    .npcalendar .npcalendar-days .npcalendar-days-count .events-2{
+        bottom:-33px;
+        left:-34px;
+        top:32px;
+    }
+    .npcalendar .npcalendar-days .npcalendar-days-count {
+        height: 50px;
+    }
+
+    .npcalendar .npcalendar-arrow {
+        display: flex;
+        margin: auto;
+        margin-top: 15%;
+        margin-bottom: 5%;
+    }
+
+    .npcalendar .npcalendar-next-prev {
+        margin-bottom: 0px;
+    }
+
+    .npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-nep-days-e {
+        /* width: 100%; */
+        position: absolute;
+        z-index: 96;
+        font-size: 15px;
+        font-weight: 400;
+        /* text-align: right; */
+        right: 5px;
+    }
+    
+    .npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-tithi-e {
+        font-size: 8px;
+        position: absolute;
+        z-index: 97;
+        right: 10px;
+        text-align: right;
+        line-height: 15px;
+        bottom: 0px;
+    }
+
+    .npcalendar .npcalendar-days-table .events-table {
+        display: block;
+        position: absolute;
+        width: 100%;
+        z-index: 200;
+        text-align: center;
+        top: 15px;
+       
+    }
+
+    .npcalendar .npcalendar-days-table .events-table .events-table-1{
+        height: 15px;
+        width: 100%;
+        z-index: 3;
+        display: flex;
+       
+    }
+
+    
+    .npcalendar .npcalendar-days .npcalendar-days-count .events{
+        font-size: 10px;
+        position: absolute;
+        z-index: 99;
+        left: 5px;
+        width: 100%;
+        text-align: left;
+        bottom: 4px;
+        text-decoration: none;
+        color: #069b08;
+    }
+
+    .npcalendar .npcalendar-days-table .events-table .events-table-1 .event-flex span {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        font-size: 11px;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        line-height: 10px;
+    }
+
+    .has-event {
+        right:5px !important;
+        top: 8px !important;
+    }
+}
+
+@media (min-width: 520px) and (max-width: 768px) {
+    .npcalendar .npcalendar-arrow {
+        margin-top: 8%;
+    }
+
+    .npcalendar .npcalendar-days .npcalendar-days-count .events-2{
+        left: -8px;
+        top:32px;
+    }
+
+    .has-event {
+        right:5px !important;
+        top: 8px !important;
+        
+    }
+
+    .holiday-text {
+        padding:0;
+        bottom:-33px;
+    }
+
+  
+}
+
+
+@media (max-width: 500px) {
+    .npcalendar .npcalendar-days .npcalendar-days-count .events-2{
+        left: -23px;
+        top:29px;
+    }
+
+    .holiday-text {
+        position: relative !important;
+        top: 31px !important;
+        padding:0;
+        right: 14px !important;
+    }
+
+    .npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-nep-days {
+        width: 100%;
+        position: relative;
+        z-index: 96;
+        font-size: 14px;
+        line-height: 45px;
+    }
+
+    .npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-tithi-e{
+        display: none;
+    }
+
+    .npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-tithi {
+        display: none;
+    }
+
+    .npcalendar .npcalendar-days .npcalendar-days-count {
+        height: 45px;
+    }
+
+    .npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-nep-days-e{
+        /* width: 100%; */
+        position: absolute;
+        z-index: 96;
+        font-size: 14px;
+        font-weight: 400;
+        text-align: right;
+        top: -4px;
+        right: 5px;
+    }
+}
+
+@media (max-width: 350px) {
+    .npcalendar .npcalendar-days .npcalendar-days-count {
+        height: 40px;
+    }
+
+    
+
+    .npcalendar .npcalendar-days .npcalendar-days-count .npcalendar-nep-days {
+        font-size: 15px;
+        line-height: 40px;
+    }
+
+    .npcalendar .npcalendar-days-table .events-table {
+        display: block;
+        position: absolute;
+        width: 100%;
+        z-index: 200;
+        text-align: center;
+        /* background: grey; */
+        top: 14px;
+    }
+
+    .npcalendar .npcalendar-days-table .events-table .events-table-1 {
+        height: 12px;
+        width: 100%;
+        z-index: 3;
+        display: flex;
+    }
+}
+
+
+
+
+@media (min-width: 330px) and (max-width: 519px) {
+    .npcalendar .npcalendar-arrow {
+        margin-top: 14%;
+    }
+
+    .npcalendar .npcalendar-days .npcalendar-days-count .events-2{
+        left: -8px;
+        top:30px;
+    }
+
+   
+}
+
+@media (max-width: 329px) {
+    .npcalendar .npcalendar-arrow {
+        margin-top: 17%;
+    }
+
+    .holiday-text {
+        position: relative !important;
+        top: 26px !important;
+        right: 14px !important;
+    }
+
+    .npcalendar .npcalendar-days .npcalendar-days-count .events-2{
+        left: -8px;
+        top:24px;
+    }
+}
+
+.task-complete {
+    text-decoration: line-through;
+}
+
+.holiday {
+    color:#d10b15;
+}
+

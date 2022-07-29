@@ -1,0 +1,52 @@
+{% extends "client/base/index.html" %} 
+
+{% load static %}
+
+{% block title %}Sites{% endblock %}
+
+{% block subtitle %}Sites{% endblock %}
+
+{% block head %}
+
+{% endblock %} 
+
+{% block content %}
+				<div class="mdk-header-layout__content mdk-header-layout__content--fullbleed mdk-header-layout__content--scrollable page">
+					<div class="container-fluid page__container">
+						<div class="card card-form form-header-layout">
+							<h1>Client</h1>
+							<div class="row no-gutters">
+								<div class="col-lg-12 card-form__body card-body pomelo-form-card">
+									<form method="post" action="" enctype="multipart/form-data" autocomplete="off" class="was-validated">
+										{% csrf_token %}
+							 			{% for field in form %}
+										<div class="form-group" >
+											<label>{{field.label}}{% if field.field.required %}* {% endif %}</label>
+											{{ field }}
+											<span style="color: red;">{{ field.errors }}</span>
+										</div>
+										{% endfor %}                                       
+										<button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Submit</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+{% endblock content %}
+
+
+{% block script %}
+
+	{% include "client/base/form.html" %} 
+
+	<script type="text/javascript">
+		$('#id_domain_url').keyup(function(){
+			var domainUrl = $(this).val();
+			domainSplit = domainUrl.split('.')
+			if(domainSplit.length > 0)
+				$('#id_schema_name').val(domainSplit[0])
+		});
+	</script>
+
+{% endblock %}

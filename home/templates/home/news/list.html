@@ -1,0 +1,108 @@
+{% extends "home/base/index.html" %} 
+
+{% load static %}
+{% load nepaliDate %}
+{% load localization %}
+
+{% block title %}{{ config.website_title__localized|default:'वेबसाइट शीर्षक' }}{% endblock %}
+
+{% block head %}
+	<style>
+		img.news-list-image{
+			object-fit: cover;	
+		}
+	</style>
+{% endblock %}
+
+{% block content %}
+
+	<section class="breadcrump-section">
+		<div class="breadcrump-bgimg" style="background-image: url({% static 'home/assets/images/mt-everest.jpg' %});">
+			<div class="breadcrumb-overlay-text text-center">
+				
+				<div class="breadcrumb-title mb-15">
+					<h1>{% trans %}News{% endtrans %}</h1>
+				</div>
+
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="{% url_localized 'home:home' %}">{% trans %}Home{% endtrans %}</a></li>
+						<li class="breadcrumb-item active" aria-current="page">{% trans %}News{% endtrans %}</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+	</section>
+    
+	<section class="section news-section">
+		<div class="container">
+			<div class="mb-30">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="features-category">
+                            <span class="features-category-title box-shadow-effect">{% trans %}News{% endtrans %}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <form method="GET">
+                            <div class="input-group d-inline-flex" style="max-width: 200px;">
+                                <input type="text" class="form-control" placeholder="{% trans %}Search{% endtrans %}..." name="search" value="{{ request.GET.search|default:'' }}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+			<div class="row">
+			{% for news in object_list %}
+				<div class="col-lg-4 col-md-6">
+					<div><div class="border-white-box mb-30">
+						<div class="post">
+							<a class="" href="{% url_localized 'home:news-detail' news.pk %}" title="{{ news.title__localized }}" ><img class="news-list-image img-fluid" src="{{ news.get_photo }}" alt=""></a>
+							<div class="post-body post-body-bgcolor post-body-overlay-margin">
+								<div class="mb-10">
+									<h5><a href="{% url_localized 'home:news-detail' news.pk %}" >{{ news.title__localized }}</a></h5>
+								</div>
+								<ul class="post-meta mb-10 pl-0">
+									<!-- category field need to add -->
+									<li class="list-category"><a href="{% url_localized 'home:news-detail' news.pk %}" >{{ news.author|default_if_none:'' }}</a></li>
+									<li class="list-date">{{ news.created_at__localized }}</li>
+								</ul>
+								<div class="mb-10">
+									<p>{{ news.description|striptags|safe|truncatechars:160  | default_if_none:'' }}</p>
+								</div>
+								<span class="read-more "><a href="{% url_localized 'home:news-detail' news.pk %} " >{% trans %}Read More{% endtrans %}</a></span>
+							</div>
+						</div>
+					</div></div>
+				</div>
+			{% endfor %}
+			</div>
+
+			{% include 'home/base/pagination.html' %}
+		</div>
+	</section>
+
+{% endblock %}
+
+{% block script %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".font-selector").click(function(event) {
+				event.preventDefault();
+				$(".detail-news-details-paragh").animate({
+					"font-size": $(this).data("fontsize")
+				});
+			});
+
+
+			$("#detail-controls a").on('click', function() {
+				$("#detail-controls a").removeClass('detail-controls-active ');
+				$(this).addClass('detail-controls-active ');
+			});
+
+		});
+	</script>
+{% endblock %}

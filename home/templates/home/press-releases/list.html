@@ -1,0 +1,113 @@
+{% extends "home/base/index.html" %} 
+
+{% load static %}
+{% load nepaliDate %}
+{% load regtags %}
+{% load localization %}
+
+{% block title %}{% trans %}Press Releases{% endtrans %} | {{ config.website_title__localized|default:'वेबसाइट शीर्षक' }}{% endblock %}
+
+{% block head %}
+	<style>
+		img.news-list-image{
+			object-fit: cover;	
+		}
+	</style>
+{% endblock %}
+
+{% block content %}
+
+	<section class="breadcrump-section">
+        <div class="breadcrump-bgimg" style="background-image: url({% static 'home/assets/images/mt-everest.jpg' %});">
+            <div class="breadcrumb-overlay-text text-center">
+                
+                <div class="breadcrumb-title mb-15">
+                    <h1>{% trans %}Press Releases{% endtrans %}</h1>
+                </div>
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url_localized 'home:home' %}">{% trans %}Home{% endtrans %}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{% trans %}Press Releases{% endtrans %}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+	</section>
+	<section class="section list-detail-section">
+        <div class="container">
+            <div class="mb-30">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="features-category">
+                            <span class="features-category-title box-shadow-effect">{% trans %}Press Releases{% endtrans %}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <form method="GET">
+                            <div class="input-group d-inline-flex" style="max-width: 200px;">
+                                <input type="text" class="form-control" placeholder="{% trans %}Search{% endtrans %}..." name="search" value="{{ request.GET.search|default:'' }}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <div class="overflow-auto scrollbar-css mb-15">
+                    <table class="table table-height">
+                        <thead>
+                        <tr>
+                            <th>{% trans %}Date{% endtrans %}</th>
+                            <th>{% trans %}Title{% endtrans %}</th>
+                            <th>{% trans %}Files{% endtrans %}</th>
+                            <th>{% trans %}Read more{% endtrans %}</th>
+                        </tr>
+                        </thead>
+                        <tbody class="table-hover-css">
+                        {% for object in object_list %}    
+                            <tr>
+                                <td>{{ object.created_at__localized }}</td>
+                                <th>
+                                    <a href="{% url_localized 'home:press-releases-detail' object.id %}" class="list-detail-font">{{ object.title }}</a>
+                                    <div class="post-date ">
+                                        {% if locale == 'ne' %}
+                                        {{ object.created_at|timesince_nep }}
+                                        {% else %}
+                                        {{ object.created_at|timesince }} ago
+                                        {% endif %}
+                                    </div>
+                                </th>
+                                <td>
+                                {% if object.document_file %}
+                                    <a href="{{ object.document_file.url }}"><img src="{{ object.file_image }}" class="table-bg-img"></a>
+                                {% endif %}  
+                                </td>
+                                <td>
+                                    <div class="view-more-btn">
+                                        <a href="{% url_localized 'home:press-releases-detail' object.id %}" class="btn btn-dark">{% trans %}Read more{% endtrans %}</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- pagination -->
+                {% include 'home/base/pagination.html' %}
+            </div>
+        </div>
+    </section>
+    
+{% if object_list %}
+	
+
+{% endif %}
+
+{% endblock %}
+
+{% block script %}
+	
+{% endblock %}

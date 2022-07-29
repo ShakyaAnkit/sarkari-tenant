@@ -1,0 +1,186 @@
+{% extends "dashboard/base/index.html" %} 
+
+{% load static %}
+
+{% block title %}Site Config{% endblock %}
+
+{% block subtitle %}Site Config{% endblock %}
+
+{% block head %}
+
+
+{% endblock %} 
+
+
+{% block content %}
+
+				<!-- Header Layout Content -->
+				<div class="mdk-header-layout__content mdk-header-layout__content--fullbleed mdk-header-layout__content--scrollable page">
+					<div class="container-fluid page__container">
+						<div class="card document-card">
+							<div class="row">
+								<div class="col-md-12">
+									<div style="text-align: right; margin-bottom: 35px;">
+										<a href="{% url 'dashboard:site-config-update' %}" class="btn btn-outline-primary" >
+											<i class="fas fa-pencil-alt"></i>&nbsp; Update 
+										</a>                                      
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-sm-12 document-table-space">
+									<table class="table w-full no-footer" role="grid" >
+										<thead class="table-space-top-bottom">
+											<tr role="row">
+												<th>S.N</th>
+												<th>Title</th>
+												<th>Value</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>Header</td>
+                                                <td style="width: 50%;">{{ object.header }}</td>
+                                            </tr>
+											<tr>
+												<td>2</td>
+												<td>Header (English)</td>
+                                                <td style="width: 50%;">{{ object.header_en|default:'N/A' }}</td>
+                                            </tr>
+											<tr>
+												<td>3</td>
+												<td>Main Title</td>
+                                                <td>{{ object.main_title }}</td>
+                                            </tr>
+											<tr>
+												<td>4</td>
+												<td>Main Title (English)</td>
+                                                <td>{{ object.main_title_en|default:'N/A' }}</td>
+                                            </tr>
+											<tr>
+												<td>5</td>
+												<td>Sub Title</td>
+                                                <td>{{ object.sub_title }}</td>
+                                            </tr>
+											<tr>
+												<td>6</td>
+												<td>Sub Title (English)</td>
+                                                <td>{{ object.sub_title_en|default:'N/A' }}</td>
+                                            </tr>
+											<tr>
+												<td>7</td>
+												<td>Website title</td>
+                                                <td>{{ object.website_title }}</td>
+                                            </tr>
+											<tr>
+												<td>8</td>
+												<td>Website title (English)</td>
+                                                <td>{{ object.website_title_en|default:'N/A' }}</td>
+                                            </tr>
+											<tr>
+												<td>9</td>
+												<td>Logo</td>
+                                                <td>
+													{% if object.logo %}
+														<img src="{{ object.logo.url }}" style="max-width: 200px; width: 100%;">
+													{% endif %}
+												</td>
+                                            </tr>
+											<tr>
+												<td>10</td>
+												<td>About Us</td>
+                                                <td>{{ object.about_us|safe }}</td>
+                                            </tr>
+											<tr>
+												<td>11</td>
+												<td>About Us (English)</td>
+                                                <td>{{ object.about_us_en|default:'N/A'|safe }}</td>
+                                            </tr>
+											<tr>
+												<td>12</td>
+												<td>Address</td>
+                                                <td>{{ object.address }}</td>
+                                            </tr>
+											<tr>
+												<td>13</td>
+												<td>Phone no.</td>
+                                                <td>{{ object.phone_no }}</td>
+                                            </tr>
+											<tr>
+												<td>14</td>
+												<td>Email</td>
+                                                <td>{{ object.email }}</td>
+                                            </tr>
+											<tr>
+												<td>15</td>
+												<td>Fax</td>
+                                                <td>{{ object.fax|default_if_none:'' }}</td>
+                                            </tr>
+											<tr>
+												<td>16</td>
+												<td>Audio Notice Board</td>
+                                                <td>{{ object.audio_notice_board|default_if_none:'' }}</td>
+                                            </tr>
+											<tr>
+												<td>17</td>
+												<td>P.O. Box no.</td>
+                                                <td>{{ object.pobox|default_if_none:'' }}</td>
+											</tr>
+											<tr>
+												<td>18</td>
+												<td>Navbar Full Width</td>
+                                                <td>{{ object.full_nav }}</td>
+                                            </tr>	
+											<tr>
+												<td>19</td>
+												<td>Facebook</td>
+                                                <td>{{ object.facebook|default_if_none:'N/A' }}</td>
+                                            </tr>
+											<tr>
+												<td>20</td>
+												<td>Twitter</td>
+                                                <td>{{ object.twitter|default_if_none:'N/A' }}</td>
+                                            </tr>	
+											<tr>
+												<td>21</td>
+												<td>HR String</td>
+                                                <td>{{ object.hr_string|default_if_none:'N/A' }}</td>
+                                            </tr>
+											<tr>
+												<td>22</td>
+												<td>HR String (English)</td>
+                                                <td>{{ object.hr_string_en|default_if_none:'N/A' }}</td>
+                                            </tr>	
+											<tr>
+												<td>23</td>
+												<td>Header IFRAME</td>
+                                                <td>{{ object.header_iframe|default_if_none:'N/A' }}</td>
+                                            </tr>
+											<tr>
+												<td>24</td>
+												<td>Latitude</td>
+                                                <td>{{ object.latitude|default_if_none:'N/A' }}</td>
+                                            </tr>	
+											<tr>
+												<td>25</td>
+												<td>Longitude</td>
+                                                <td>{{ object.longitude|default_if_none:'N/A' }}</td>
+                                            </tr>										
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+							{% include "dashboard/base/pagination.html" %}
+                        </div>
+                    </div>
+                </div>
+                <!-- // END header-layout__content -->
+{% endblock %}
+
+{% block modal %}
+{% endblock %}
+
+{% block script %}
+{% endblock %}

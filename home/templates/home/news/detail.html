@@ -1,0 +1,136 @@
+{% extends "home/base/index.html" %} 
+
+{% load static %}
+{% load nepaliDate %}
+{% load localization %}
+
+{% block title %}{{ config.website_title__localized|default:'वेबसाइट शीर्षक' }}{% endblock %}
+
+{% block content %}
+
+	<section class="breadcrump-section">
+		<div class="breadcrump-bgimg" style="background-image: url({% static 'home/assets/images/mt-everest.jpg' %});">
+			<div class="breadcrumb-overlay-text text-center">
+				
+				<div class="breadcrumb-title mb-15">
+					<h1>{{ news.title__localized }}</h1>
+				</div>
+
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="{% url_localized 'home:home' %}">{% trans %}Home{% endtrans %}</a></li>
+						<li class="breadcrumb-item"><a href="{% url_localized 'home:news-list' %}">{% trans %}News{% endtrans %}</a></li>
+						<li class="breadcrumb-item active" aria-current="page">{{ news.title__localized }}</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+	</section>
+
+	<section class="section news-detail-section">
+		<div class="container">
+			{% comment %} <div class="mb-30">
+				<div class="features-category">
+					<span class="features-category-title box-shadow-effect">राजनीति</span>
+				</div>
+			</div> {% endcomment %}
+
+			<div class="mb-30 post-body">
+				<div class="heading-title-50 mb-15">
+					<h1><a href="#">{{ news.title__localized }}</a></h1>
+				</div>
+				{% if news.sub_title %}
+				<div class="paragh-font-20 mb-15">
+					<p>{{ news.sub_title }}</p>
+				</div> 
+				{% endif %}
+				<div class="flex-Center detail-aurthor">
+					<!-- <div class="post cicle-img-radius mr-15">
+						<a class="" href=""><img class="img-fluid " src="/static/home/assets/images/smile.jpg" alt=" "></a>
+					</div> -->
+					<div class="mr-15">
+						<a href="#"><b>{{ news.author }}</b></a>
+					</div>
+					<div class="mr-15">
+						<span class="st-line">|</span>
+					</div>
+					<div class="mr-15">
+						<span class="post-date">{{ news.created_at__localized }}</span>
+					</div>
+				</div>
+			</div>
+
+			
+			<div class="row">
+				<div class="col-lg-9 col-md-9">
+					<div class="mb-30">
+						<div class="post">
+							<a class="" href="#" title="{{ news.title__localized }}" ><img class="img-fluid" src="{{ news.get_original_photo }}" alt=""></a>
+							<div class="post-body post-body-bgcolor post-body-overlay-margin" style="margin-top: 0px !important;">
+								<div class="detail-paragh-width">
+									<div class="mb-30">
+										<div id="detail-controls" class="detail-controls-box d-none d-sm-block">
+											<a href="#" class="detail-large font-selector" data-fontsize="30px">अ</a>
+											<a href="#" class="selected detail-medium font-selector" data-fontsize="25px">अ</a>
+											<a href="#" class="detail-small font-selector detail-controls-active" data-fontsize="20px">अ</a>
+										</div>
+										<div id="detail-controls" class="detail-controls-box d-block d-sm-none">
+											<a href="#" class="detail-large font-selector" data-fontsize="20px">अ</a>
+											<a href="#" class="selected detail-medium font-selector" data-fontsize="18px">अ</a>
+											<a href="#" class="detail-small font-selector detail-controls-active" data-fontsize="15px">अ</a>
+										</div>
+									</div>
+
+									<div class="detail-news-details-paragh detail-fontsize text-justify mb-30">
+										<div style="color: black">{{ news.description|safe }}</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3">
+					<div class="sticky-sidebar mb-15 ">
+						<div class="gray-dark-border mb-30">
+							<ul>
+								{% for news in other_news %}
+								<li class="mb-15">
+									<div class="category-collage ">
+										<div class="category-headline-desc mbtm-5 ">
+											<h6>
+												<a href="{% url_localized 'home:news-detail' news.pk %}">{{ news.title__localized|truncatechars:50 }}</a>
+											</h6>
+										</div>
+										<span class="post-date ">{{ news.created_at__localized }}</span>
+									</div>
+								</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+{% endblock %}
+
+{% block script %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".font-selector").click(function(event) {
+				event.preventDefault();
+				$(".detail-news-details-paragh").animate({
+					"font-size": $(this).data("fontsize")
+				});
+			});
+
+
+			$("#detail-controls a").on('click', function() {
+				$("#detail-controls a").removeClass('detail-controls-active ');
+				$(this).addClass('detail-controls-active ');
+			});
+
+		});
+	</script>
+{% endblock %}

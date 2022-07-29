@@ -1,0 +1,39 @@
+{% extends "dashboard/base/index.html" %} 
+
+{% load static %}
+
+{% block title %}{{ object.name }}{% endblock %}
+
+{% block subtitle %}{{ object.name }}{% endblock %}
+
+{% block head %}
+
+{% endblock %} 
+
+{% block content %}
+
+<div class="mdk-header-layout__content mdk-header-layout__content--fullbleed mdk-header-layout__content--scrollable page">
+    <div class="container-fluid page__container">
+        <div class="card card-form form-header-layout">
+            <div class="row no-gutters">
+                <div class="col-lg-12">
+                    <table class="table">
+                        <tr>
+                            <td>Name</td>
+                            <td> : </td>
+                            <td>{{ object.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Link</td>
+                            <td> : </td>
+                            <td>{{ object.link | default_if_none:''}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

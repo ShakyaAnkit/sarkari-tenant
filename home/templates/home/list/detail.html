@@ -1,0 +1,122 @@
+{% extends "home/base/index.html" %} 
+
+{% load static %}
+{% load nepaliDate %}
+{% load regtags %}
+{% load localization %}
+
+{% block title %}{{ object.title__localized }} | {{ config.website_title__localized|default:'वेबसाइट शीर्षक' }}{% endblock %}
+
+{% block content %}
+
+    <section class="breadcrump-section">
+        <div class="breadcrump-bgimg" style="background-image: url({% static 'home/assets/images/mt-everest.jpg' %});">
+            <div class="breadcrumb-overlay-text text-center">
+                
+                <div class="breadcrumb-title mb-15">
+                    <h1>{{ object.title }}</h1>
+                </div>
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url_localized 'home:home' %}">{% trans %}Home{% endtrans %}</a></li>
+                        <li class="breadcrumb-item"><a href="{% url_localized 'home:list-category' object.category.name %}">{{ object.category.name__localized }}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ object.title__localized }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <section class="section list-desciption-section">
+        <div class="container">
+            <div class="mb-30">
+                <div class="features-category">
+                    <span class="features-category-title box-shadow-effect">{{ object.created_at__localized }}</span>
+                </div>
+            </div>
+
+            <div class="mb-30">
+                <div class="mb-30 post-body">
+                    <div class="heading-title-50 mb-15">
+                        <h1><a href>{{ object.title__localized }}</a></h1>
+                    </div>
+                    <div class="paragh-font-20 mb-10">
+                        <p>{{ object.description|safe }}</p>
+                    </div>
+                    <div class="mr-15">
+                        <span class="post-date">
+                            {% if locale == 'ne' %}
+                            {{ object.created_at|timesince_nep }}
+                            {% else %}
+                            {{ object.created_at|timesince }} ago
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-30">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8">
+                        <div class="list-description-img mobile-mb-30">
+                        {% if object.is_image %}
+                            <img src="{{ object.document_file.url }}" class="img-fluid">
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <div class="sticky-sidebar">
+                            {% if object.document_file %}
+                                {% if object.is_pdf %}
+                                    <div class="list-attached-file mb-30">
+                                        <a title="" target="_blank" href="{{ object.document_file.url }}" data-original-title="">
+                                            <img src="{{ object.file_image }}" class="table-bg-img" style="max-width: 50px;">
+                                            <div class="mt-15">
+                                                <small>{{ object.document_file.filename }}</small>
+                                                <div>{% trans %}Click here to download{% endtrans %}</div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% else %}
+                                    <div class="list-attached-file mb-30">
+                                        <a title="" target="_blank" href="{{ object.document_file.url }}" data-original-title="">
+                                            <img src="{{ object.file_image }}" class="table-bg-img" style="max-width: 50px;">
+                                            <div class="mt-15">
+                                                <small>{{ object.document_file.filename }}</small>
+                                                <div>{% trans %}Click here to download{% endtrans %}</div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if others %}
+                                <div class="mb-30">
+                                    <div class="features-category">
+                                        <span class="features-category-title box-shadow-effect">{% trans %}More{% endtrans %}
+                                        </span>
+                                    </div>
+                                </div>
+                                <ul class="gray-dark-border description-heading-font">
+                                {% for other in others %}
+                                    <li class="d-flex mb-15">
+                                        <div class="desc-heading">
+                                            <a href="{% url_localized 'home:list-detail' other.id %}" class="list-detail-font">{{ other.title__localized|truncatechars:50 }}</a>
+                                            <div class="post-date mtop-5 ">{{ other.created_at__localized }}</div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                                </ul>
+                                <!-- <div class="view-more-btn text-right pr-10 mt-15">
+                                    <button type="button" class="btn btn-dark">थप हेर्नुहोस्</button>
+                                </div> -->
+                            {% endif %}   
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+{% endblock %}

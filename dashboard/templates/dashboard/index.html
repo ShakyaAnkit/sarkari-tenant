@@ -1,0 +1,33 @@
+{% extends "dashboard/base/index.html" %} 
+
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block subtitle %}{% endblock %}
+
+{% block head %}
+{% endblock %} 
+
+
+{% block content %}
+                <div class="mdk-header-layout__content mdk-header-layout__content--fullbleed mdk-header-layout__content--scrollable page">
+					<div class="container-fluid page__container">
+						<div class="card document-card">
+                            <div style="display: flex; justify-content: center;width: 100%;">
+                                <img src="{% if config.logo %}{{ config.logo.url }}{% else %}http://nepal.gov.np/splash/nepal-govt.png{% endif %}" alt="">
+                            </div>
+                            <h1 style="display: flex; justify-content: center; width: 100%;">Welcome To Dashboard</h1>
+                            <h3 class="text-center">{{ config.website_title|default:'' }}</h3>
+                        </div>
+                    </div>
+                </div>
+{% endblock %}
+
+{% block modal %}
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

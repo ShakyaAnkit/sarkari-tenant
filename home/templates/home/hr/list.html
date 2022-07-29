@@ -1,0 +1,123 @@
+{% extends "home/base/index.html" %} 
+
+{% load static %}
+{% load nepaliDate %}
+{% load localization %}
+
+{% block title %}{% trans %}Members{% endtrans %} | {{ config.website_title__localized|default:'वेबसाइट शीर्षक' }}{% endblock %}
+
+{% block head %}
+	<style>
+		img.news-list-image{
+			object-fit: cover;	
+		}
+	</style>
+{% endblock %}
+
+{% block content %}
+
+	<section class="breadcrump-section">
+		<div class="breadcrump-bgimg" style="background-image: url({% static 'home/assets/images/mt-everest.jpg' %});">
+			<div class="breadcrumb-overlay-text text-center">
+				
+				<div class="breadcrumb-title mb-15">
+					<h1>{% trans %}Members{% endtrans %}</h1>
+				</div>
+
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="{% url_localized 'home:home' %}">{% trans %}Home{% endtrans %}</a></li>
+						<li class="breadcrumb-item active" aria-current="page">{% trans %}Members{% endtrans %}</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+	</section>
+    
+{% if object_list %}
+    <section class="section listing-section">
+		<div class="container">
+			<div class="mb-30">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="features-category">
+                            <span class="features-category-title box-shadow-effect">{% trans %}Members{% endtrans %}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <form method="GET">
+                            <div class="input-group d-inline-flex" style="max-width: 200px;">
+                                <input type="text" class="form-control" placeholder="{% trans %}Search{% endtrans %}..." name="search" value="{{ request.GET.search|default:'' }}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="mb-30">
+				<div class="mt-30">
+					<div class="row">
+						{% for hr in object_list %}
+						<div class="col-sm-6 col-md-4 col-lg-3">
+							<div class="img-full-height img-min-height">
+								<div class="post post-bground-images caption detail-caption">
+									<div class="caption-overlay"></div>
+									<a href="{% url_localized 'home:hr-detail' hr.id %}" class="">
+										<div class="post-bground-img-hover" style="background: url({{ hr.get_photo }}); background-size: cover; background-repeat: no-repeat; background-position: center; height: 100%; position: relative;">
+										</div>
+									</a>
+									<div class="caption-details">
+										<div class="caption-title">
+											<div class="white-title-link-color">
+
+												<ul class="post-meta mt-2">
+													<li><a href="{% url_localized 'home:hr-detail' hr.id %}" class="">{{ hr.name__localized }}</a></li>
+													<li>{{ hr.position__localized }}</li>
+													{% comment %} <li>{{ hr.level }}</li> {% endcomment %}
+													{% comment %}<li>फोन नं. : ०७१-५४००२९, ५५०००३ Ext. ३०१</li>{% endcomment %}
+													{% comment %} {% if hr.phone_no %}<li>{% trans %}Members{% endtrans %} : {{ hr.phone_no }}</li>{% endif %} {% endcomment %}
+													{% if hr.email %}<li style="text-transform: none!important;">{% trans %}Members{% endtrans %} : {{ hr.email }}</li>{% endif %}
+												</ul>
+											</div>
+										</div>
+										<div class="view-all">
+											<a href="{% url_localized 'home:hr-detail' hr.id %}" >{% trans %}See more{% endtrans %}</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+
+                {% include 'home/base/pagination.html' %}
+			</div>
+		</div>
+	</section>
+{% endif %}
+
+{% endblock %}
+
+{% block script %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".font-selector").click(function(event) {
+				event.preventDefault();
+				$(".detail-news-details-paragh").animate({
+					"font-size": $(this).data("fontsize")
+				});
+			});
+
+
+			$("#detail-controls a").on('click', function() {
+				$("#detail-controls a").removeClass('detail-controls-active ');
+				$(this).addClass('detail-controls-active ');
+			});
+
+		});
+	</script>
+{% endblock %}

@@ -1,0 +1,149 @@
+{% extends "home/base/index.html" %} 
+
+{% load static %}
+{% load nepaliDate %}
+{% load regtags %}
+{% load localization %}
+
+{% block title %}{{ config.website_title__localized|default:'वेबसाइट शीर्षक' }}{% endblock %}
+
+{% block head %}
+	<style>
+		img.news-list-image{
+			object-fit: cover;	
+        }
+        .event-flex {
+            cursor:pointer !important;
+        }
+
+        .events-table {
+            z-index: 9!important
+        }
+	</style>
+{% endblock %}
+
+{% block content %}
+
+	<section class="breadcrump-section">
+        <div class="breadcrump-bgimg" style="background-image: url({% static 'home/assets/images/mt-everest.jpg' %});">
+            <div class="breadcrumb-overlay-text text-center">
+                
+                <div class="breadcrumb-title mb-15">
+                    <h1>{% trans %}Events{% endtrans %}</h1>
+                </div>
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url_localized 'home:home' %}">{% trans %}Home{% endtrans %}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{% trans %}Events{% endtrans %}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+	</section>
+    <section class="section calendar-section ">
+        <div class="container">
+            <div class="calendar-layout mb-30">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="mb-30">
+                            <div class="features-category">
+                                <span class="features-category-title box-shadow-effect"> 
+                                    {% trans %}Events{% endtrans %}</span>
+                            </div>
+                        </div>
+                        <div class="np-container text-center mb-30 sticky-sidebar ">
+                           <div class="calendar"></div>
+                        </div>
+                    </div>
+                    {% if other_events %}
+                    <div class="col-lg-4">
+                        <div class="calendar-list-block">
+
+                            <div class="mb-30">
+                                <div class="features-category">
+                                    <span class="features-category-title box-shadow-effect">{% trans %}More Events{% endtrans %}
+                                        </span>
+                                </div>
+                            </div>
+                            <ul class="description-heading-font">
+                            {% for event in other_events %}    
+                                <li class="flex-Center mb-30">
+                                    <div class="desc-date mr-15">
+                                        <div href="#" class="table-calendar-date">
+                                            <div class="table-calendar-day">
+												{% if locale == 'ne' %}
+												{{ event.start_date|nep_date }}
+												{% else %}
+												{{ event.start_date|date:'d' }}
+												{% endif %}
+											</div>
+                                            <div class="table-calendar-month">
+												{% if locale == 'ne' %}
+												{{ event.start_date|nep_month }}
+												{% else %}
+												{{ event.start_date|date:'M' }}
+												{% endif %}
+											</div>
+                                        </div>
+                                    </div>
+                                    <div class="calendar-events-program ">
+                                        <div class="calendar-events-title mb-10"><a href="{% url_localized 'home:event-detail' event.id %}">{{ event.title__localized|truncatechars:50 }}</a></div>
+                                        <div class="calendar-events-location "><i class="fas fa-map-marker-alt "></i>&nbsp;{{ event.location__localized }} </div>
+                                    </div>
+                                </li>
+                            {% endfor %}                                    
+                            </ul>
+                            {% comment %} <div class="view-more-btn text-right pr-10 mt-15">
+                                <button type="button" class="btn btn-dark">थप हेर्नुहोस्</button>
+                            </div> {% endcomment %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block script %}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.calendar').fullCalendar({
+                header: {
+                    left: 'title',
+                    center: '',
+                    right: 'prev,next'
+                },
+                weekends: false,
+                weekNumbers: true,
+                defaultView: 'month',
+                events: [{% for object in object_list %}{
+
+                    id:'{{ object.id }}',
+                    start: '{{ object.start_date|date:"Y-m-d" }}',
+                    end: '{{ object.end_date|date:"Y-m-d" }}',
+                    allDay: true,
+                    nextDayThreshold: '12:00:00',
+                    // rendering: 'background',
+                    backgroundColor: '#14468c;',
+                    borderColor: '#14468c;',
+                    title: '{{ object.title }}',
+                    textColor: '#fff;',
+                    className: 'event-full'
+                }, {% endfor %}],
+                eventClick: function(info) {
+                    var url = 'event/'+info.id
+                    window.open(url);
+                }
+                
+            });
+
+        });
+
+    </script>
+	
+{% endblock %}

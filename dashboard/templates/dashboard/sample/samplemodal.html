@@ -1,0 +1,27 @@
+	<!-- Task detail popup Modal -->
+	<div class="modal fade" id="taskModal" role="dialog" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="taskTitle"></h5>
+					<div style="float:right">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						{% if request.user|has_group:"HR Officer" or request.user|has_group:"Chief HR" %}
+						<a class="deleteTask a-delete btn-modal-header" href="" style="color:#757575;"><i class="fa fa-trash" title="Delete"></i></a>
+						<a class="editTask btn-modal-header" href="" style="color:#757575"><i class="fa fa-pen" title="Edit"></i></a>
+						{% endif %}
+					</div>
+				</div>
+				<div class="modal-body">
+					<p id="taskdescription"></p>
+					<i class="fa fa-calendar "></i>
+					<span id="taskstartDate" style="color:#909090"></span>--
+					<span id="taskendDate" style="color:#909090"></span><br>
+				</div>
+				<div class="modal-footer">
+					<span id="taskReporter" style="color:#909090; float: left; flex: 1"></span>
+					<a class="done" href=""></a>
+				</div>
+			</div>
+		</div>
+	</div>

@@ -1,0 +1,125 @@
+{% extends "client/base/index.html" %} 
+
+{% load static %}
+
+{% block title %}Sites{% endblock %}
+
+{% block subtitle %}Sites{% endblock %}
+
+{% block head %}
+
+
+{% endblock %} 
+
+
+{% block content %}
+
+				<!-- Header Layout Content -->
+				<div class="mdk-header-layout__content mdk-header-layout__content--fullbleed mdk-header-layout__content--scrollable page">
+					<div class="container-fluid page__container">
+						<div class="card document-card">
+							<div class="row">
+								<div class="col-md-12">
+									<div style="text-align: right; margin-bottom: 35px;">
+										<a href="{% url 'client:clients-create' %}" class="btn btn-outline-primary" >
+											<i class="fa fa-plus"></i>&nbsp; Add 
+										</a>                                      
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-sm-12 document-table-space">
+									<table class="table w-full no-footer" role="grid" >
+										<thead class="table-space-top-bottom">
+											<tr role="row">
+												<th>S.N</th>
+												<th>Domain Url</th>
+												<th>Name</th>
+												<th>Schema name</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+									   		{% for object in object_list %}
+											<tr>
+												<td>{{ forloop.counter }}</td>
+												<td>{{ object.domain_url }}</td>
+												<td>{{ object.name }}</td>
+												<td>{{ object.schema_name }}</td>
+                                                <td>
+                                                    <div class="btn-group" role="group">
+														<a data-id="{{ object.pk }}" data-name="{{ object.name }}" href="{% url 'client:clients-user-create' object.pk %}" class="btn-user-create btn-sm btn btn-info btn-success-space " data-toggle="tooltip" data-original-title="Create User">
+                                                            <i class="fa fa-user"></i>
+                                                        </a>
+                                                        <a href="{% url 'client:clients-update' object.pk %}" class="btn-sm btn btn-info btn-success-space " data-toggle="tooltip" data-original-title="Modify">
+                                                            <i class="fa fa-pencil-alt"></i>
+                                                        </a>
+                                                        <a href="{% url 'client:clients-delete' object.pk %}" class="btn-sm btn btn-danger a-delete" data-toggle="tooltip" data-original-title="Delete">
+                                                            <i class="far fa-trash-alt"></i>
+                                                        </a>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+											{% endfor %}   
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+							{% include "client/base/pagination.html" %}
+                        </div>
+                    </div>
+                </div>
+                <!-- // END header-layout__content -->
+{% endblock %}
+
+{% block modal %}
+<div class="modal" id="userCreateModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title" id="userCreateHeading">Modal Heading</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				
+				<form method="POST" id="userCreateForm" action="#">
+					{% csrf_token %}
+					<div class="form-group">
+						<label>Username</label>
+						<input type="text" class="form-control" name="username" value="">
+					</div>
+					<div class="form-group">
+						<label>Password</label>
+						<input type="password" class="form-control" name="password" value="">
+					</div>
+					<div class="form-group">
+						<label>Password Confirm</label>
+						<input type="password" class="form-control" name="confirm_password" value="">
+					</div>
+					<button type="submit" class="btn btn-primary">Create Super User</button>
+				</form>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+	$('.btn-user-create').click(function(e){
+		e.preventDefault();
+		$('#userCreateHeading').html($(this).data('name'));
+		$('#userCreateForm').attr('action', $(this).attr('href'))
+		console.log($(this).data('id'));
+		$('#userCreateModal').modal('show');
+	});
+</script>
+{% endblock %}

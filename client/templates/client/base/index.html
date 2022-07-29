@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+{% load static %}
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>{% block title %}Dashboard{% endblock %}</title>
+	<meta name="robots" content="noindex">
+	<meta name="csrf-token" content="{{ csrf_token }}">
+
+	<!-- <link rel="shortcut icon" href="{% static 'client/assets/images/image/favicon.ico' %}"> -->
+	<link type="text/css" href="{% static 'client/assets/vendor/simplebar.min.css' %}" rel="stylesheet">
+	<link type="text/css" href="{% static 'client/assets/css/app.css' %}" rel="stylesheet">
+	<link type="text/css" href="{% static 'client/assets/css/app.rtl.css' %}" rel="stylesheet">
+	<link type="text/css" href="{% static 'client/assets/css/survey.css' %}" rel="stylesheet">
+	<link type="text/css" href="https://cdn.jsdelivr.net/npm/material-icons-font/material-icons-font.css" rel="stylesheet">
+	
+	<link type="text/css" href="{% static 'client/assets/css/vendor-fontawesome-free.rtl.css' %}" rel="stylesheet">
+	<link type="text/css" href="{% static 'client/assets/css/vendor-ion-rangeslider.css' %}" rel="stylesheet">
+	<link type="text/css" href="{% static 'client/assets/css/vendor-ion-rangeslider.rtl.css' %}" rel="stylesheet">
+	<link type="text/css" href="{% static 'client/assets/css/vendor-flatpickr.css' %}" rel="stylesheet">
+	<link type="text/css" href="{% static 'client/assets/css/vendor-flatpickr.rtl.css' %}" rel="stylesheet">
+	<link type="text/css" href="{% static 'client/assets/css/vendor-flatpickr-airbnb.css' %}" rel="stylesheet">
+	<link type="text/css" href="{% static 'client/assets/css/vendor-flatpickr-airbnb.rtl.css' %}" rel="stylesheet">
+	<link type="text/css" href="{% static 'client/assets/vendor/jqvmap/jqvmap.min.css' %}" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'administration/global/fonts/material-design/material-design.min.css' %}">
+	<link type="text/css" href="{% static 'client/assets/vendor/fullcalendar/fullcalendar.min.css' %}" rel="stylesheet">
+	<!-- DateRangePicker -->
+	<link type="text/css" href="{% static 'client/assets/vendor/daterangepicker.css' %}" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href=" {% static 'client/assets/vendor/datatable/datatables.min.css' %}"/>
+	<!-- Select2 -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+	{% comment %}
+		<link type="text/css" href="{% static 'client/assets/css/vendor-select2.css' %}" rel="stylesheet">
+		<link type="text/css" href="{% static 'client/assets/css/vendor-select2.rtl.css' %}" rel="stylesheet">
+		<link type="text/css" href="{% static 'client/assets/vendor/select2/select2.min.css' %}" rel="stylesheet">
+	{% endcomment %}
+	{% comment %}
+    <script src="https://kit.fontawesome.com/db619bb7e7.js"></script>
+	{% endcomment %}
+	<link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet">
+
+	<!-- Toastr -->
+	<link type="text/css" href="{% static 'client/assets/vendor/toastr/toastr.min.css' %}" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.css">
+	<!-- NoUiSlider -->
+	<link href="{% static 'client/assets/vendor/nouislider/nouislider.min.css' %}" rel="stylesheet" />
+	<!-- edited css-->
+	<link type="text/css" href="{% static 'client/assets/css/editedstyle.css' %}?v=1" rel="stylesheet">
+
+	<link type="text/css" href="{% static 'client/assets/css/circle.css' %}" rel="stylesheet">
+
+	{% if form or appForm %}
+	{{ form.media.css }}
+	{{ appForm.media.css }}
+	{% endif %}
+
+	<style>
+		/* BASE STYLES */
+		.navbar-notifications-indicator:after{
+			display: none !important; 
+		}
+
+		.btn-modal-header{
+			margin: -1rem -1rem -1rem auto; padding: 1rem; display: inline-block; vertical-align: middle;
+		}
+
+		[dir="ltr"] .fc-event {
+			padding: .0rem .5rem;
+		}
+
+		[dir="ltr"] .fc-title {
+			font-weight: 500;
+		}
+
+		.fc-unthemed .fc-content, .fc-unthemed .fc-divider, .fc-unthemed .fc-list-heading td, .fc-unthemed .fc-list-view, .fc-unthemed .fc-popover, .fc-unthemed .fc-row, .fc-unthemed tbody, .fc-unthemed td, .fc-unthemed th, .fc-unthemed thead {
+			text-align: center;
+		}
+
+		.app-settings.app-fab--absolute{
+			display: none;
+		}
+		@media screen and (max-width:345px){
+			.round_profile a {
+				margin-left: 0!important;
+			}
+
+		}
+
+		body.layout-default.has-drawer-opened.swal2-shown.swal2-height-auto{
+			height: 100% !important;
+		}
+
+		.swal2-styled {
+			margin: .3125em !important;
+			padding: .625em 2em;
+			box-shadow: none;
+			font-weight: 500;
+		}
+		td.fc-today{background:#293b9cee} 
+	</style>
+
+	{% block head %}
+	{% endblock head %}
+</head>
+
+<body class="layout-default">
+	<!--<div class="preloader"></div>-->
+	<div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px" data-fullbleed>
+		<div class="mdk-drawer-layout__content">
+
+			<!-- Header Layout -->
+			<div class="mdk-header-layout js-mdk-header-layout" data-has-scrolling-region>
+
+				<!-- Header -->
+
+				<div id="header" class="mdk-header js-mdk-header m-0" data-fixed data-effects="waterfall" data-retarget-mouse-scroll="false">
+					<div class="mdk-header__content">
+
+						<div class="navbar navbar-expand-sm navbar-main navbar-light bg-white  pr-0" id="navbar" data-primary>
+							<div class="container-fluid p-0">
+
+								<!-- Navbar toggler -->
+								<button class="navbar-toggler navbar-toggler-custom d-lg-none d-flex mr-navbar" type="button" data-toggle="sidebar">
+									<span class="material-icons">short_text</span>
+								</button>
+
+								<!-- Navbar Brand -->
+								<a href="#" class="navbar-brand flex ">
+									<span>Dashboard</span>
+								</a>
+
+								{% block breadcrumb %}
+								{% comment %}
+								<div class="nav-breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                        <li class="breadcrumb-item"><a href="#">Library</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Data</li>
+                                    </ol>
+                                </div>
+								{% endcomment %}
+								{% endblock %}
+
+								{% comment %}
+								<form class="ml-auto search-form search-form--light d-none d-sm-flex flex" action="index.html">
+									<input type="text" class="form-control" placeholder="Search">
+									<button class="btn" type="submit" role="button"><i class="material-icons">search</i></button>
+								</form>
+								{% endcomment %}
+
+
+								
+								<div class="dropdown round_profile">
+									<a href="#" data-toggle="dropdown" data-caret="false" class="dropdown-toggle navbar-toggler navbar-toggler-company border-left d-flex align-items-center ml-navbar">
+										<span class="avatar avatar-lg " style="width: 40px !important; height: 40px !important;">
+											
+										</span>
+									</a>
+									<div id="company_menu" class="dropdown-menu dropdown-menu-right navbar-company-menu" style="overflow-y: hidden;">
+										<div class="dropdown-item d-flex align-items-center py-2  navbar-company-info py-3">
+											{% if request.user.is_authenticated%}
+										<a class="dropdown-item d-flex align-items-center " style="padding: 0px;" href="#">
+											<span class="material-icons mr-2">person</span> My Profile
+										</a>
+										 {% endif %}
+										</div> 
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item d-flex align-items-center py-2" href="{% url 'client:logout' %}">
+											<span class="material-icons mr-2">exit_to_app</span> Logout
+										</a>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<!-- // END Header -->
+				 {% block content %}   
+
+				{% endblock content %}
+
+				<!-- // END header-layout__content -->
+
+			</div>
+			<!-- // END header-layout -->
+
+		</div>
+		<!-- // END drawer-layout__content -->
+
+		{% include './menu.html' %}
+	</div>
+	<!-- // END drawer-layout -->
+
+	<div class="mdk-drawer js-mdk-drawer" id="events-drawer" data-align="end">
+		<div class="mdk-drawer__content">
+			<div class="sidebar sidebar-light sidebar-left simplebar" data-simplebar>
+
+
+
+
+				<small class="text-dark-gray px-3 py-1">
+					<strong>Thursday, 28 Feb</strong>
+				</small>
+
+				<div class="list-group list-group-flush">
+
+					<div class="list-group-item bg-light">
+						<div class="row">
+							<div class="col-auto d-flex flex-column">
+								<small>12:30 PM</small>
+								<small class="text-dark-gray">2 hrs</small>
+							</div>
+							<div class="col">
+								<div class="d-flex flex-column flex">
+									<a href="#" class="text-body"><strong class="text-15pt">Marketing Team Meeting</strong></a>
+
+									<small class="text-muted d-flex align-items-center"><i class="material-icons icon-16pt mr-1">location_on</i> 16845 Hicks Road</small>
+
+
+								</div>
+								<div class="avatar-group mt-2">
+
+									<div class="avatar avatar-xs">
+										<img src="{% static 'client/assets/images/256_joao-silas-636453-unsplash.jpg' %}" alt="Avatar" class="avatar-img rounded-circle">
+									</div>
+
+									<div class="avatar avatar-xs">
+										<img src="{% static 'client/assets/images/256_jeremy-banks-798787-unsplash.jpg' %}" alt="Avatar" class="avatar-img rounded-circle">
+									</div>
+
+									<div class="avatar avatar-xs">
+										<img src="{% static 'client/assets/images/256_daniel-gaffey-1060698-unsplash.jpg' %}" alt="Avatar" class="avatar-img rounded-circle">
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<small class="text-dark-gray px-3 py-1">
+					<strong>Wednesday, 27 Feb</strong>
+				</small>
+
+				<div class="list-group list-group-flush">
+
+					<div class="list-group-item bg-light">
+						<div class="row">
+							<div class="col-auto d-flex flex-column">
+								<small>07:48 PM</small>
+								<small class="text-dark-gray">30 min</small>
+							</div>
+							<div class="col">
+								<div class="d-flex flex-column flex">
+									<a href="#" class="text-body"><strong class="text-15pt">Call Alex</strong></a>
+
+
+									<small class="text-muted d-flex align-items-center"><i class="material-icons icon-16pt mr-1">phone</i> 202-555-0131</small>
+
+								</div>
+
+
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<small class="text-dark-gray px-3 py-1">
+					<strong>Tuesday, 26 Feb</strong>
+				</small>
+
+				<div class="list-group list-group-flush">
+
+					<div class="list-group-item bg-light">
+						<div class="row">
+							<div class="col-auto d-flex flex-column">
+								<small>03:13 PM</small>
+								<small class="text-dark-gray">2 hrs</small>
+							</div>
+							<div class="col">
+								<div class="d-flex flex-column flex">
+									<a href="#" class="text-body"><strong class="text-15pt">Design Team Meeting</strong></a>
+
+									<small class="text-muted d-flex align-items-center"><i class="material-icons icon-16pt mr-1">location_on</i> 16845 Hicks Road</small>
+
+
+								</div>
+								<div class="avatar-group mt-2">
+
+									<div class="avatar avatar-xs">
+										<img src="{% static 'client/assets/images/256_rsz_1andy-lee-642320-unsplash.jpg' %}" alt="Avatar" class="avatar-img rounded-circle">
+									</div>
+
+									<div class="avatar avatar-xs">
+										<img src="{% static 'client/assets/images/256_michael-dam-258165-unsplash.jpg' %}" alt="Avatar" class="avatar-img rounded-circle">
+									</div>
+
+									<div class="avatar avatar-xs">
+										<img src="{% static 'client/assets/images/256_luke-porter-261779-unsplash.jpg' %}" alt="Avatar" class="avatar-img rounded-circle">
+									</div>
+
+									<div class="avatar avatar-xs">
+										<img src="{% static 'client/assets/images/stories/256_rsz_clem-onojeghuo-193397-unsplash.jpg' %}" alt="Avatar" class="avatar-img rounded-circle">
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<small class="text-dark-gray px-3 py-1">
+					<strong>Monday, 25 Feb</strong>
+				</small>
+
+				<div class="list-group list-group-flush">
+
+					<div class="list-group-item bg-light">
+						<div class="row">
+							<div class="col-auto d-flex flex-column">
+								<small>12:30 PM</small>
+								<small class="text-dark-gray">2 hrs</small>
+							</div>
+							<div class="col d-flex">
+								<div class="d-flex flex-column flex">
+									<a href="#" class="text-body"><strong class="text-15pt">Call Wendy</strong></a>
+
+
+									<small class="text-muted d-flex align-items-center"><i class="material-icons icon-16pt mr-1">phone</i> 202-555-0131</small>
+
+								</div>
+
+								<div class="avatar avatar-xs">
+									<img src="{% static 'client/assets/images/256_michael-dam-258165-unsplash.jpg' %}" alt="Avatar" class="avatar-img rounded-circle">
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- App Settings FAB -->
+	<div id="app-settings">
+		<app-settings></app-settings>
+	</div>
+
+	{% block modal %}
+	{% endblock %}
+
+	<!-- jQuery -->
+	<script src="{% static 'client/assets/vendor/jquery.min.js' %}"></script>
+
+	<!-- Bootstrap -->
+	<script src="{% static 'client/assets/vendor/popper.min.js' %}"></script>
+	<script src="{% static 'client/assets/vendor/bootstrap.min.js' %}"></script>
+
+	<!-- Simplebar -->
+	<script src="{% static 'client/assets/vendor/simplebar.min.js' %}"></script>
+
+	<!-- DOM Factory -->
+	<script src="{% static 'client/assets/vendor/dom-factory.js' %}"></script>
+
+	<!-- MDK -->
+	<script src="{% static 'client/assets/vendor/material-design-kit.js' %}"></script>
+
+	<!-- Range Slider -->
+	<script src="{% static 'client/assets/vendor/ion.rangeSlider.min.js' %}"></script>
+	<script src="{% static 'client/assets/js/ion-rangeslider.js' %}"></script>
+
+	<!-- App -->
+	<script src="{% static 'client/assets/js/toggle-check-all.js' %}"></script>
+	<script src="{% static 'client/assets/js/check-selected-row.js' %}"></script>
+	<script src="{% static 'client/assets/js/dropdown.js' %}"></script>
+	<script src="{% static 'client/assets/js/sidebar-mini.js' %}"></script>
+	<script src="{% static 'client/assets/js/app.js' %}"></script>
+	<script src="{% static 'client/assets/js/survey.js' %}"></script>
+
+	<!-- App Settings (safe to remove) -->
+	<script src="{% static 'client/assets/js/app-settings.js' %}"></script>
+
+
+
+	<!-- Flatpickr -->
+	<script src="{% static 'client/assets/vendor/flatpickr/flatpickr.min.js' %}"></script>
+	<script src="{% static 'client/assets/js/flatpickr.js' %}"></script>
+
+	<!-- Global Settings -->
+	<script src="{% static 'client/assets/js/settings.js' %}"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+	
+	{% comment %}
+	<!-- Chart.js -->
+	<script src="{% static 'client/assets/vendor/Chart.min.js' %}"></script>
+
+	<!-- App Charts JS -->
+	<script src="{% static 'client/assets/js/chartjs-rounded-bar.js' %}"></script>
+	<script src="{% static 'client/assets/js/charts.js' %}"></script>
+	{% endcomment %}
+
+	<!-- Vector Maps -->
+	<script src="{% static 'client/assets/vendor/jqvmap/jquery.vmap.min.js' %}"></script>
+	<script src="{% static 'client/assets/vendor/jqvmap/maps/jquery.vmap.world.js' %}"></script>
+	<script src="{% static 'client/assets/js/vector-maps.js' %}"></script>
+	<!-- Moment.js -->
+	<script src="{% static 'client/assets/vendor/moment.min.js' %}"></script>
+	<!-- FullCalendar -->
+	<script src="{% static 'client/assets/vendor/fullcalendar/fullcalendar.min.js' %}"></script>
+	<script src="{% static 'client/assets/js/fullcalendar.js' %}"></script>
+
+	<!-- calendar script staarts ends here -->
+
+	<script src="{% static 'client/assets/vendor/daterangepicker.js' %}"></script>
+	<script src="{% static 'client/assets/js/daterangepicker.js' %}"></script>
+	
+	<!-- Confetti.js -->
+	<script src="{% static 'administration/client/assets/js/jquery.confetti.js' %}"></script>
+	<script src="{% static 'administration/client/assets/js/jquery.vnm.confettiButton.js' %}"></script>
+	<!-- Datatables -->
+	<script type="text/javascript" src="{% static 'client/assets/vendor/datatable/datatables.min.js' %}"></script>
+	<!-- Select2 -->
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+	{% comment %}
+	<script src="{% static 'client/assets/vendor/select2/select2.min.js' %}"></script>
+	<script src="{% static 'client/assets/js/select2.js' %}"></script>	
+	{% endcomment %}
+
+	<!-- Toastr -->
+	<script src="{% static 'client/assets/vendor/toastr/toastr.min.js' %}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.js"></script>
+
+	<!-- nouislider -->
+	<script type="text/javascript" src="{% static 'client/assets/vendor/nouislider/nouislider.min.js' %}"></script>
+
+	<!-- Google Analytics -->	
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-161413517-1"></script>
+
+	{% if company != None and company.analytics_id != None %}
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id={{ company.analytics_id }}"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', '{{ company.analytics_id }}');
+	</script>
+	{% endif %}
+
+	<!-- FIREBASE NOTIFICATION -->
+	<script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-messaging.js"></script>
+	<script src="/firebase-notification.js"></script>
+
+	<!-- base  scripts -->
+	<script>
+		$(document).ready(function(){
+			console.log($('input[data-rfid="true"]').length);
+			if($('input[data-rfid="true"]').length == 1){
+				$('body').on('keydown', 'input', function(event){
+					event.stopPropagation();
+				});
+
+				$('input[data-rfid="true"]').focus();
+
+				$('input[data-rfid]').keydown(function(event){
+					event.stopPropagation();
+					if(event.keyCode == 13){
+						if($(this).val().length % 10 == 0){
+							$(this).val($(this).val().substring(0, 10));
+						}
+					}
+				});
+
+				$(document).keydown(function(event){
+					event.stopPropagation();
+					$('input[data-rfid="true"]').focus();
+				});
+			}
+		});
+
+		// delete link
+		$('body').on('click', '.a-delete', function (e) {
+			e.preventDefault();
+			{% comment %} if (!confirm("Are you sure you want to delete ? "))
+				return;
+			window.location.href = $(this).attr('href'); {% endcomment %}
+
+			Swal.fire({
+				title: 'Are you sure?',
+				text: "You won't be able to revert this!",
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes, delete it!'
+			}).then((result) => {
+				if (result.value) {
+					window.location.href = $(this).attr('href');
+				}
+			})
+		});
+
+		// modal popup
+		$('.modal-link').click(function(event){
+			var that = this;
+			event.preventDefault();
+			$.get($(this).attr('href'), function(data, status){
+
+				$($(that).data('target')).find('.modal-content').empty().append(data);
+			})
+		});
+
+		$(document).ready(function(){
+			
+			// init select2
+			$("select:not(.non-select2)").select2({ 
+				width: '100%',
+			});
+
+			//initialize datatable
+			$('.basic-datatable').DataTable({
+                dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
+                "pageLength": 25,
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "search": {
+                    "search": ""
+                },
+                initComplete: function() {
+                    $(this.api().table().container()).find('input').parent().wrap('<form>').parent().attr('autocomplete', 'off');
+                }
+            });
+
+			// datetimepicker
+			$(".datetimepicker").flatpickr({
+				dateFormat: "Y-m-d H:i",
+				enableTime: true,
+				allowInput: true,
+			});
+			$(".datepicker").flatpickr({
+				dateFormat: "Y-m-d",
+				enableTime: false,
+				allowInput: true,
+			});
+			$(".timepicker").flatpickr({
+				dateFormat: "H:i",
+				enableTime: true,
+				noCalendar: true,
+				allowInput: true,
+			});
+
+			{% comment %}
+			// toastr
+			toastr.options = { "debug": false, "newestOnTop": false, "positionClass": "toast-top-right", "closeButton": true, "timeOut": "10000", "progressBar": false };
+			{% for message in messages %}
+				{% if message.level == 20 %}
+					toastr.info("{{ message }}");	
+				{% elif message.level == 25 %}
+					toastr.success("{{ message }}");		
+				{% elif message.level == 30 %}
+					toastr.warning("{{ message }}");		
+				{% elif message.level == 40 %}
+					toastr.error("{{ message }}");
+				{% endif %}		
+			{% endfor %}
+			{% endcomment %}
+			
+			// Sweet alert
+			{% for message in messages %}
+			{% if message.level == 20 %}
+				var swal_type = 'info';	
+			{% elif message.level == 25 %}
+				var swal_type = 'success';			
+			{% elif message.level == 30 %}
+				var swal_type = 'warning';		
+			{% elif message.level == 40 %}
+				var swal_type = 'error';	
+			{% endif %}	
+
+			Swal.fire({
+				position: 'top-end',
+				type: swal_type,
+				title: '{{ message }}',
+				showConfirmButton: false,
+				timer: 2000
+			})
+			{% endfor %}
+
+			// daterange picker window settings
+            $('body').on('show.daterangepicker', '.daterangepicker-input', function (ev, picker) {
+                if (picker.element.offset().top - $(window).scrollTop() + picker.container.outerHeight() + 100 > $(window).height()) {
+                    picker.drops = 'up';
+                } else {
+                    picker.drops = 'down';
+                }
+                picker.move();
+            });
+
+
+		});
+	</script>
+
+	{% if form or appForm %}
+	{{ form.media.js }}
+	{{ appForm.media.js }}
+	{% endif %}
+
+	{% block script %}
+	{% endblock %}
+
+</body>
+
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Dashboard Login</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="robots" content="all,follow">
+
+		{% load static %}
+		<link rel="stylesheet" href="{% static 'client/auth/vendor/bootstrap/css/bootstrap.min.css' %}">
+		<link rel="stylesheet" href="{% static 'client/auth/vendor/font-awesome/css/font-awesome.min.css' %}">
+		<link rel="stylesheet" href="{% static 'client/auth/css/fontastic.css' %}">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+		<link rel="stylesheet" href="{% static 'client/auth/css/style.default.css' %}" id="theme-stylesheet">
+		<!-- Custom stylesheet - for your changes-->
+		<link rel="stylesheet" href="{% static 'client/auth/css/custom.css' %}">
+		<style>
+			.wrap-login100 {
+				width: 680px;
+				background: #fff;
+				border-radius: 0.25rem;
+				position: relative;
+			}
+			.login-page .form-holder .form form {
+				max-width: 100%;
+			}
+			.login100-form-title {
+				width: 100%;
+				display: block;
+				font-family: Roboto,sans-serif;
+				font-size: 30px;
+				color: #555555;
+				line-height: 1.2;
+				text-align: center;
+			}
+			.p-b-53 {
+				padding-bottom: 53px;
+			}
+			.btn-login{
+				width:100%;
+				background-color: #0588FF;
+				border-color:  #0588FF;
+				
+				padding: 10px 0;
+			}
+			.btn-login:hover{
+				background-color: #123088;
+				border-color:  #123088;				
+			}
+			.p-b-9 {
+				padding-bottom: 9px;
+			}
+			.txt1 {
+				font-size: 16px;
+				color: #555555;
+				font-family: Roboto,sans-serif;
+				line-height: 1.5;
+			}
+			.input100 {
+				
+			line-height: 1.2;
+			display: block;
+			width: 100%;
+			height: 55px;
+			background: transparent;
+			padding: 0 7px 0 13px !important;
+		}
+
+		.login-page .form-holder .info, .login-page .form-holder .form {
+			min-height: 56vh;
+		}
+		input.input-material {
+			border-radius: 0.25rem;
+		}
+		.login-page::before {
+			filter: blur(0px)!important;
+		}
+		</style>
+
+
+	</head>
+	<body>
+		<div class="page login-page">
+			<div class="container d-flex align-items-center ">
+				<div class="form-holder">
+					<div class="row">
+						<!-- Logo & Information Panel-->
+						<div class="col-lg-3">
+						</div>
+
+						<!-- Form Panel		-->
+						<div class="col-lg-6 bg-white has-shadow wrap-login100">
+
+							<div class="form d-flex align-items-center ">
+								
+								<div class="content">
+									<span class="login100-form-title p-b-53">
+										Sign in
+										</span>
+									{% if messages %}
+									
+									{% for message in messages %}
+									<div class="alert alert-danger">{{ message }}</div>
+									{% endfor %}
+									
+									{% endif %}
+									
+									<form method="post" class="form-validate">
+										{% csrf_token %}
+										<div class="form-group">
+											<div class="p-b-9">
+												<span class="txt1">Username</span>
+											</div>
+											<input id="login-username" type="text" name="username" required data-msg="Please enter your username" class="input-material input100">
+											<!-- <label for="login-username" class="label-material">Username</label> -->
+										</div>
+										<div class="form-group">
+											<div class="p-b-9">
+												<span class="txt1">Password</span>
+											</div>
+											<input id="login-password" type="password" name="password" required data-msg="Please enter your password" class="input-material input100">
+											<!-- <label for="login-password" class="label-material">Password</label> -->
+										</div>
+										<button id="login" class="btn btn-primary btn-login">Login</button>
+									</form>
+									<!-- <a href="#" class="forgot-pass">Forgot Password?</a>
+									<br>
+									<small>Do not have an account?</small>
+									<a href="register.html" class="signup">Signup</a> -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="copyrights text-center">
+				<p>Powered by prixa</p>
+			</div> -->
+		</div>
+
+		<script src="{% static 'client/auth/vendor/jquery/jquery.min.js' %}"></script>
+		<script src="{% static 'client/auth/vendor/popper.js/umd/popper.min.js' %}"> </script>
+		<script src="{% static 'client/auth/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+		<script src="{% static 'client/auth/vendor/jquery.cookie/jquery.cookie.js' %}"> </script>
+		<script src="{% static 'client/auth/vendor/chart.js/Chart.min.js' %}"></script>
+		<script src="{% static 'client/auth/vendor/jquery-validation/jquery.validate.min.js' %}"></script>
+		<script src="{% static 'client/auth/js/front.js' %}"></script>
+
+	</body>
+</html>

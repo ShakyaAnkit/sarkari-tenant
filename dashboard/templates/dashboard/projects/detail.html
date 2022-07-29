@@ -1,0 +1,52 @@
+{% extends "dashboard/base/index.html" %} 
+
+{% load static %}
+
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block subtitle %}{{ object.title }}{% endblock %}
+
+{% block head %}
+
+{% endblock %} 
+
+{% block content %}
+
+<div class="mdk-header-layout__content mdk-header-layout__content--fullbleed mdk-header-layout__content--scrollable page">
+    <div class="container-fluid page__container">
+        <div class="card card-form form-header-layout">
+            <div class="row no-gutters">
+                <div class="col-lg-12">
+                    <table class="table">
+                        <tr>
+                            <td>Title</td>
+                            <td> : </td>
+                            <td>{{ object.title }}</td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td> : </td>
+                            <td>{{ object.description |safe}}</td>
+                        </tr>
+                        <tr>
+                            <td>Budget Amount</td>
+                            <td> : </td>
+                            <td>{{ object.budget_amout| default_if_none:''}}</td>
+                        </tr>
+                        <tr>
+                            <td>File</td>
+                            <td> : </td>
+                            <td>{% if object.document_file %}
+                                <a target="_blank" class="btn btn-sm btn-primary" href="{{ object.document_file.url }}">Download</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

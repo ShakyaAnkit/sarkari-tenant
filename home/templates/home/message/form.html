@@ -1,0 +1,124 @@
+{% extends "home/base/index.html" %} 
+
+{% load static %}
+{% load recaptcha3 %}
+{% load localization %}
+
+{% block title %}{% trans %}Suggestions / Complaints{% endtrans %} | {{ config.website_title__localized|default:'वेबसाइट शीर्षक' }}{% endblock %}
+
+{% block head %}
+	<style>
+		img.news-list-image{
+			object-fit: cover;	
+        }
+    /* Recaticha visiblitiy */
+        .grecaptcha-badge { 
+            visibility: hidden;
+        }
+    /* Recaticha visiblitiy */
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <section class="breadcrump-section">
+        <div class="breadcrump-bgimg" style="background-image: url('{% static 'home/assets/images/mt-everest.jpg' %}');">
+            <div class="breadcrumb-overlay-text text-center">
+
+                <div class="breadcrumb-title mb-15">
+                    <h1>{% trans %}Send Suggestions / Complaints{% endtrans %}</h1>
+                </div>
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'home:home'%}">{% trans %}Home{% endtrans %}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{% trans %}Suggestions / Complaints{% endtrans %}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </section>
+    
+    <section class="queries-form-section">
+        <div class="container">
+            <div class="mb-30 mt-30">
+                <div class="features-category">
+                    <span class="features-category-title box-shadow-effect">{% trans %}Send Suggestions / Complaints{% endtrans %}</span>
+                </div>
+            </div>
+
+            <div class="row justify-content-center align-items-center detail-contact-font">
+                <div class="col-lg-12 col-md-12">
+                    <div class="row">
+                        <div class="col-md-4 text-center py-4 border-right">
+                            <div class="icon mb-2">
+                                <i class="fas fa-map"></i>
+                            </div>
+                            <span class="d-block">{% trans %}Address{% endtrans %}</span>
+                            <span>{{ config.address|safe|striptags}}</span>
+                        </div>
+                        <div class="col-md-4 text-center py-4 border-right">
+                            <div class="icon mb-2">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <span class="d-block">{% trans %}Contact{% endtrans %}</span><span><a href="tel://{{ config.phone_no|default:'' }}">{{ config.phone_no|default:'' }}</a></span>
+                        </div>
+                        <div class="col-md-4 text-center py-4">
+                            <div class="icon mb-2">
+                                <i class="far fa-envelope"></i>
+                            </div>
+                            <span class="d-block">{% trans %}Email{% endtrans %}</span><span><a href="mailto: {{ config.email }}"> {{ config.email }}</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="getintouch-contact-form section">
+                <div class="row justify-content-center align-items-center ">
+                    <div class="col col-lg-8">
+                        <form action="{% url 'home:message-create' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                            <div class="form-group">
+                                <label for="name">{% trans %}Full Name{% endtrans %} &nbsp;{% if form.name.field.required %}* {% endif %}</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="{% trans %}Full Name{% endtrans %}">
+                                <span style="color:red;">{{ form.errors.name }}</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">{% trans %}Email{% endtrans %}&nbsp;{% if form.email.field.required %}* {% endif %}</label>                                   
+                                <input type="email" class="form-control" id="email" name="email" placeholder="{% trans %}Email{% endtrans %}">
+                                <span style="color:red;">{{ form.errors.email }}</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone_no">{% trans %}Phone{% endtrans %}&nbsp;{% if form.phone_no.field.required %}* {% endif %}</label>                                       
+                                <input type="text" class="form-control" id="phone_no" name="phone_no" placeholder="{% trans %}Phone{% endtrans %}">
+                                <span style="color:red;">{{ form.errors.phone_no }}</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">{% trans %}Message {% endtrans %}&nbsp;{% if form.message.field.required %}* {% endif %}</label>
+                                <textarea name="message" id="message" class="form-control" placeholder="" cols="30" rows="6"></textarea>
+                                <span style="color:red;">{{ form.errors.message }}</span>
+                            </div>
+                                <input id="id_captcha" name="g-recaptcha-response" type="hidden" class="django-recaptcha-hidden-field">
+                                    {{ form.errors.captcha }}
+
+                            <div class="form-group pt-3">
+
+                                <button type="submit" class="btn btn-outline-primary mr-2">{% trans %}Send{% endtrans %}</button>
+                                {% comment %} <button type="button" id="cancel" class="btn btn-outline-success">{% trans %}Cancel{% endtrans %}</button> {% endcomment %}
+                            </div>
+                        </form>
+                        <small>This site is protected by reCAPTCHA and the Google 
+                            <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+                            <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block script %}   
+    {% recaptcha_init %}
+    {% recaptcha_ready action_name='homepage' %}
+
+{% endblock %}

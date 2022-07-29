@@ -1,0 +1,65 @@
+{% extends "dashboard/base/index.html" %} 
+
+{% load static %}
+
+{% block title %}Pages{% endblock %}
+
+{% block subtitle %}Pages{% endblock %}
+
+{% block head %}
+
+{% endblock %} 
+
+{% block content %}
+				<div class="mdk-header-layout__content mdk-header-layout__content--fullbleed mdk-header-layout__content--scrollable page">
+					<div class="container-fluid page__container">
+						<div class="card card-form form-header-layout">
+							<h1>Pages</h1>
+							<div class="row no-gutters">
+								<div class="col-lg-12 card-form__body card-body pomelo-form-card">
+									<form method="post" action="" enctype="multipart/form-data" autocomplete="off" class="was-validated">
+										{% csrf_token %}
+							 			{% for field in form %}
+										<div class="form-group" >
+											<label>{{field.label}}{% if field.field.required %}* {% endif %}</label>
+											{{ field }}
+											<span style="color: red;">{{ field.errors }}</span>
+										</div>
+										{% endfor %}                                       
+										<button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Submit</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+{% endblock content %}
+
+
+{% block script %}
+	{% include "dashboard/base/form.html" %} 
+	<script>
+	function string_to_slug(str) {
+		str = str.replace(/^\s+|\s+$/g, ''); // trim
+		str = str.toLowerCase();
+	
+		// remove accents, swap ñ for n, etc
+		var from = "àáãäâèéëêìíïîòóöôùúüûñç·/_,:;";
+		var to   = "aaaaaeeeeiiiioooouuuunc------";
+
+		for (var i=0, l=from.length ; i<l ; i++) {
+			str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+		}
+
+		str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+			.replace(/\s+/g, '-') // collapse whitespace and replace by -
+			.replace(/-+/g, '-'); // collapse dashes
+
+		return str;
+	}
+
+		$('#id_title').keyup(function(){
+			$('#id_slug').val(string_to_slug($(this).val()));
+		});
+	</script>
+{% endblock %}
