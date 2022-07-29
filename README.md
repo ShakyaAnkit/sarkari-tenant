@@ -1,4 +1,4 @@
-# Prixa Sarkari
+# Sarkari
 
 ```bash
 pip install -r requirements.txt
